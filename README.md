@@ -56,13 +56,7 @@ cd archetype-taxonomy-engine
 | Hosting | GitHub Pages compatible |
 
 ---
-
-## Deploy to GitHub Pages
-
-After pushing to GitHub:
-1. Go to your repository → **Settings** → **Pages**
-2. Under **Source**, select `main` branch → `/ (root)`
-3. Click **Save** — your app will be live at `https://YOUR_USERNAME.github.io/archetype-taxonomy-engine/`
+ Open to use
 
 ---
 
