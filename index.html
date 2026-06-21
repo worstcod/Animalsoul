@@ -1,0 +1,2398 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-[#07090e] text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archetype: The Infinite Taxonomy Mirror Engine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* Retro styling */
+    .font-retro {
+      font-family: 'Press Start 2P', monospace;
+    }
+    .font-mono-text {
+      font-family: 'Share Tech Mono', monospace;
+    }
+    
+    /* Pitch black background override */
+    body {
+      background-color: #07090e;
+    }
+    
+    /* Custom scrollbar to match retro style */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07090e;
+      border-left: 4px solid #fff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #fff;
+      border: 4px solid #07090e;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
+  </style>
+</head>
+<body class=" h-full text-white font-mono-text flex flex-col selection:bg-white selection:text-black">
+
+  <!-- Main Container -->
+  <div class="flex-1 flex flex-col min-h-screen p-4 sm:p-6 max-w-7xl mx-auto w-full relative z-10">
+    
+    <!-- Top Header Frame -->
+    <header class="border-4 border-white p-4 sm:p-6 mb-6 text-center bg-[#07090e]">
+      <h1 class="font-retro text-sm sm:text-lg md:text-2xl text-cyan-400 mb-2 tracking-wider">
+        ARCHETYPE: THE INFINITE TAXONOMY MIRROR ENGINE
+      </h1>
+      <p class="font-retro text-[8px] sm:text-[10px] text-pink-400 tracking-tight animate-pulse">
+        [ SYSTEM STATUS: OFFLINE DECIPHERING MATRIX LOADED ]
+      </p>
+    </header>
+
+    <!-- UI State 1: Animal Character Selection -->
+    <main id="selection-screen" class="flex-1 flex flex-col space-y-6">
+      
+      <!-- Instructions Banner -->
+      <div class="border-4 border-white p-3 text-center bg-[#07090e]">
+        <p class="font-retro text-[9px] sm:text-xs">
+          ACTIVATE SOUL CONFIGURATION: SELECT <span class="text-cyan-400">2 TO 4</span> ANIMAL INSTINCTS
+        </p>
+      </div>
+
+      <!-- Engine Mode Toggle Bar -->
+      <div class="border-4 border-white p-3 bg-black flex flex-col sm:flex-row justify-between items-center gap-3">
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-wider font-retro text-cyan-400">ENGINE MODE:</span>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button id="mode-single-btn" onclick="setEngineMode('single')" class="flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-white text-black bg-white select-none uppercase">SINGLE ANALYSIS</button>
+          <button id="mode-compare-btn" onclick="setEngineMode('compare')" class="flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-neutral-800 text-neutral-600 bg-black select-none uppercase">DUAL COMPARISON</button>
+        </div>
+      </div>
+
+      <!-- Compare Slots Selector -->
+      <div id="compare-slots-bar" class="hidden border-4 border-white p-3 bg-black flex flex-col sm:flex-row justify-between items-center gap-3">
+        <div class="flex flex-col sm:flex-row gap-3 w-full">
+          <button id="slot-a-btn" onclick="setActiveSlot('A')" class="flex-1 text-left p-2 border-2 border-white bg-white text-black font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center">
+            <span>SLOT A (ACTIVE):</span>
+            <span id="slot-a-emojis" class="text-lg"></span>
+          </button>
+          <button id="slot-b-btn" onclick="setActiveSlot('B')" class="flex-1 text-left p-2 border-2 border-neutral-800 bg-black text-neutral-400 font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center">
+            <span>SLOT B:</span>
+            <span id="slot-b-emojis" class="text-lg"></span>
+          </button>
+        </div>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <button onclick="clearSlot('A')" class="flex-1 sm:flex-initial text-[9px] font-retro border-2 border-white px-3 py-2 uppercase text-white hover:bg-white hover:text-black transition-all">CLEAR A</button>
+          <button onclick="clearSlot('B')" class="flex-1 sm:flex-initial text-[9px] font-retro border-2 border-white px-3 py-2 uppercase text-white hover:bg-white hover:text-black transition-all">CLEAR B</button>
+        </div>
+      </div>
+
+      <!-- Categories Container -->
+      <div class="flex-1 space-y-8">
+        
+        <!-- Category: Land Mammals -->
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h2 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            [ LAND MAMMALS ]
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3 pt-2" id="grid-mammals"></div>
+        </section>
+
+        <!-- Category: Birds -->
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h2 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            [ BIRDS ]
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 pt-2" id="grid-birds"></div>
+        </section>
+
+        <!-- Category: Reptiles & Insects -->
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h2 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            [ REPTILES & INSECTS ]
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 pt-2" id="grid-reptiles"></div>
+        </section>
+
+        <!-- Category: Aquatic & Amphibians -->
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h2 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            [ AQUATIC & AMPHIBIANS ]
+          </h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 pt-2" id="grid-aquatic"></div>
+        </section>
+
+      </div>
+
+      <!-- Action Panel (Bottom Sticky) -->
+      <div class="border-4 border-white p-4 bg-[#07090e] flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+          <p class="font-retro text-[9px] sm:text-xs">
+            SOUL CONFIGURATION:
+          </p>
+          <div class="flex gap-2 min-h-[36px] items-center text-xl" id="selection-bar">
+            <!-- Selected animal emojis will flash here -->
+            <span class="text-gray-600 font-retro text-[10px]">[EMPTY]</span>
+          </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+          <button id="reset-all-btn" onclick="resetEngine()" class="font-retro text-[9px] sm:text-xs tracking-widest px-4 py-3 border-4 border-red-500 text-red-500 hover:bg-red-500 hover:text-black transition-all duration-150 uppercase w-full md:w-auto text-center">
+            RESET ALL
+          </button>
+          <button id="action-btn" disabled 
+                  class="font-retro text-xs sm:text-sm px-6 py-4 border-4 border-gray-600 text-gray-600 bg-black cursor-not-allowed select-none transition-all duration-150 w-full md:w-auto text-center">
+            [LOCK: SELECT 2-4 ANIMALS]
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- UI State 2: Loading Terminal Screen -->
+    <main id="loading-screen" class="hidden flex-1 flex flex-col justify-center items-center">
+      <div class="border-4 border-white p-6 sm:p-12 bg-black max-w-2xl w-full">
+        <div class="font-retro text-[10px] sm:text-xs text-green-400 mb-6 border-b border-neutral-800 pb-2">
+          *** TAXONOMY DECRYPTION ENGINE BIOS v8.45 ***
+        </div>
+        <div id="terminal-log" class="font-retro text-[8px] sm:text-[10px] leading-relaxed space-y-3 text-green-400">
+          <!-- Terminal logs will be typed here -->
+        </div>
+        <div class="mt-4 pt-4 border-t border-neutral-800 font-retro text-[8px] sm:text-[10px] text-green-400 flex items-center justify-between">
+          <span>ALGORITHM STATE: RUNNING</span>
+          <span class=""></span>
+        </div>
+      </div>
+    </main>
+
+    <!-- UI State 3: Analysis Results Screen -->
+    <main id="results-screen" class="hidden flex-1 flex flex-col space-y-6">
+      
+      <!-- Combined Title Panel -->
+      <div class="border-4 border-cyan-400 p-6 bg-black text-center relative overflow-hidden">
+        <span class="absolute top-1 left-2 font-retro text-[8px] text-cyan-400">SYS.OUT.REV_45</span>
+        <span class="absolute top-1 right-2 font-retro text-[8px] text-pink-400">SECURITY LEVEL: ULTRA</span>
+        
+        <h2 class="font-retro text-xs sm:text-sm text-pink-400 uppercase mb-2">THE SYNTHESIZED PERSONA</h2>
+        <h3 id="result-persona-title" class="font-retro text-base sm:text-xl md:text-2xl text-cyan-400 mb-4 uppercase tracking-wider"></h3>
+        
+        <div class="border-t-2 border-dashed border-neutral-800 pt-4 max-w-3xl mx-auto">
+          <p id="result-summary" class="text-sm sm:text-base leading-relaxed text-gray-300 italic"></p>
+        </div>
+      </div>
+
+      <!-- Core Stats Grid -->
+      <div class="border-4 border-white p-4 sm:p-6 bg-[#07090e]">
+        <h3 class="font-retro text-xs sm:text-sm text-cyan-400 mb-4">[ STATISTICAL AVERAGES ]</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
+          <!-- Stealth -->
+          <div class="space-y-1">
+            <div class="flex justify-between font-retro text-[9px] sm:text-[10px] text-pink-400">
+              <span>STEALTH</span><span id="stat-stealth">0%</span>
+            </div>
+            <div class="h-2 bg-neutral-900 border border-neutral-800">
+              <div id="bar-stealth" class="h-full bg-white transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+          <!-- Velocity -->
+          <div class="space-y-1">
+            <div class="flex justify-between font-retro text-[9px] sm:text-[10px] text-pink-400">
+              <span>VELOCITY</span><span id="stat-velocity">0%</span>
+            </div>
+            <div class="h-2 bg-neutral-900 border border-neutral-800">
+              <div id="bar-velocity" class="h-full bg-white transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+          <!-- Autonomy -->
+          <div class="space-y-1">
+            <div class="flex justify-between font-retro text-[9px] sm:text-[10px] text-pink-400">
+              <span>AUTONOMY</span><span id="stat-autonomy">0%</span>
+            </div>
+            <div class="h-2 bg-neutral-900 border border-neutral-800">
+              <div id="bar-autonomy" class="h-full bg-white transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+          <!-- Logic -->
+          <div class="space-y-1">
+            <div class="flex justify-between font-retro text-[9px] sm:text-[10px] text-pink-400">
+              <span>LOGIC</span><span id="stat-logic">0%</span>
+            </div>
+            <div class="h-2 bg-neutral-900 border border-neutral-800">
+              <div id="bar-logic" class="h-full bg-white transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+          <!-- Dominance -->
+          <div class="space-y-1">
+            <div class="flex justify-between font-retro text-[9px] sm:text-[10px] text-pink-400">
+              <span>DOMINANCE</span><span id="stat-dominance">0%</span>
+            </div>
+            <div class="h-2 bg-neutral-900 border border-neutral-800">
+              <div id="bar-dominance" class="h-full bg-white transition-all duration-1000" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Volatile Friction Panel -->
+      <div id="friction-panel" class="hidden border-4 border-white p-4 sm:p-6 bg-red-900 text-white relative">
+        <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] text-red-400">
+          ⚠️ WARNING: COGNITIVE PARADOX DETECTED
+        </h3>
+        <div id="friction-text" class="pt-2 text-sm sm:text-base font-mono-text leading-relaxed"></div>
+      </div>
+
+      <!-- 8 Pillars Section -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            🧠 1. CORE MINDSET
+          </h3>
+          <div id="dossier-blueprint" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            🛡️ 2. EMOTIONAL ARCHITECTURE
+          </h3>
+          <div id="dossier-execution" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            💼 3. OPERATIONAL STYLE
+          </h3>
+          <div id="dossier-boundaries" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            🎭 4. THE SHADOW SIDE
+          </h3>
+          <div id="dossier-antidote" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+        
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            ⚡ 5. COGNITIVE CADENCE
+          </h3>
+          <div id="dossier-cognitive-cadence" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+        
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            🤝 6. RELATIONAL ARCHITECTURE
+          </h3>
+          <div id="dossier-relational-architecture" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+        
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-cyan-400">
+            🔥 7. EXISTENTIAL TRIGGERS
+          </h3>
+          <div id="dossier-existential-trigger" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+        
+        <section class="border-4 border-white p-4 relative bg-[#07090e]">
+          <h3 class="absolute -top-4 left-4 bg-[#07090e] px-2 font-retro text-[10px] sm:text-xs text-pink-400">
+            🌐 8. NETWORK POSITIONING
+          </h3>
+          <div id="dossier-network-positioning" class="pt-2 text-sm leading-relaxed text-gray-300"></div>
+        </section>
+
+      </div>
+
+      <!-- Reset button block -->
+      <div class="border-4 border-white p-4 text-center bg-black">
+        <button id="reset-btn" onclick="resetEngine()" class="font-retro text-xs sm:text-sm px-6 py-4 border-4 border-green-400 text-green-400 hover:bg-white hover:text-black transition-all duration-150 w-full md:w-auto">
+          [ RE-INITIALIZE TAXONOMY ENGINE ]
+        </button>
+      </div>
+
+    </main>
+
+    <!-- UI State 4: Comparison Results Screen -->
+    <main id="comparison-screen" class="hidden flex-1 flex flex-col space-y-6">
+
+      <!-- Header Banner -->
+      <div class="border-4 border-white p-5 bg-black text-center relative">
+        <span class="absolute top-1 left-2 font-retro text-[8px] text-cyan-400">MODE: DUAL COMPARISON</span>
+        <span class="absolute top-1 right-2 font-retro text-[8px] text-pink-400">DIFFERENTIAL ANALYSIS</span>
+        <h2 class="font-retro text-sm sm:text-base md:text-xl tracking-wider uppercase text-cyan-400">[ COMPARISON REPORT ]</h2>
+        <p class="text-xs text-neutral-400 uppercase font-mono-text mt-1">Dual Profile Synthesis & Trait Mapping</p>
+      </div>
+
+      <!-- Side-by-Side Profile Titles -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border-4 border-white p-4 bg-black space-y-2 relative">
+          <div class="absolute -top-3.5 left-4 bg-black px-2 text-[9px] font-retro tracking-widest text-cyan-400 uppercase border border-white">
+            PROFILE A
+          </div>
+          <h3 class="font-retro text-xs sm:text-sm border-b border-neutral-800 pb-2 text-white mt-2" id="comp-title-a"></h3>
+          <p id="comp-summary-a" class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-mono-text"></p>
+        </div>
+        <div class="border-4 border-white p-4 bg-black space-y-2 relative">
+          <div class="absolute -top-3.5 left-4 bg-black px-2 text-[9px] font-retro tracking-widest text-pink-400 uppercase border border-white">
+            PROFILE B
+          </div>
+          <h3 class="font-retro text-xs sm:text-sm border-b border-neutral-800 pb-2 text-white mt-2" id="comp-title-b"></h3>
+          <p id="comp-summary-b" class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-mono-text"></p>
+        </div>
+      </div>
+
+      <!-- Stats Comparison Panel -->
+      <div class="border-4 border-white p-4 bg-black space-y-4">
+        <h3 class="font-retro text-xs text-cyan-400 tracking-widest">[ STATISTICAL COMPARISON ]</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-4" id="comp-metrics-grid"></div>
+      </div>
+
+      <!-- Shared Ground / Common Traits Panel -->
+      <div class="border-4 border-white p-4 bg-black space-y-3 relative">
+        <div class="absolute -top-3.5 left-4 bg-black px-2 text-[9px] font-retro tracking-widest text-cyan-400 uppercase border border-white">
+          ✅ COMMON GROUND
+        </div>
+        <p class="font-retro text-[8px] text-neutral-500 mt-1">What Profile A and Profile B share — the overlap that makes collaboration possible.</p>
+        <div id="comp-common-ground" class="mt-2 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-2 font-mono-text"></div>
+      </div>
+
+      <!-- 8-Pillar Differential Analysis -->
+      <div class="border-4 border-white p-4 bg-black relative">
+        <div class="absolute -top-3.5 left-4 bg-black px-2 text-[9px] font-retro tracking-widest text-pink-400 uppercase border border-white">
+          🔍 DIFFERENTIAL ANALYSIS — ALL 8 PILLARS
+        </div>
+        <p class="font-retro text-[8px] text-neutral-500 mt-2 mb-4">For each pillar: where A and B diverge, and what that gap means in practice.</p>
+        <div id="comp-diff-grid" class="space-y-6"></div>
+      </div>
+
+      <!-- How You Work Together -->
+      <div class="border-4 border-white p-4 bg-black relative">
+        <div class="absolute -top-3.5 left-4 bg-black px-2 text-[9px] font-retro tracking-widest text-pink-400 uppercase border border-white">
+          HOW YOU WORK TOGETHER
+        </div>
+        <div id="comp-assessment-text" class="mt-2 text-xs sm:text-sm leading-relaxed space-y-2 text-neutral-300 font-mono-text"></div>
+      </div>
+
+      <!-- Control Bar -->
+      <div class="border-4 border-white p-4 text-center bg-black">
+        <button onclick="resetComparison()" class="font-retro text-[9px] sm:text-xs tracking-widest px-6 py-3 border-4 border-green-400 text-green-400 hover:bg-white hover:text-black transition-all duration-150 w-full sm:w-auto uppercase">
+          START NEW COMPARISON
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-8 mb-4 text-center border-t border-neutral-800 pt-4">
+      <p class="font-retro text-[8px] text-neutral-500">
+        ARCHETYPE DECRYPTION ENGINE © 2026 // HOSTED COMPLETELY LOCAL
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript Matrix & Blending Logic -->
+  <script>
+    // The Complete 48-Animal Archetype Matrix
+    const animalDatabase = [
+  {
+    "id": "wolf",
+    "name": "Wolf",
+    "emoji": "🐺",
+    "category": "LAND MAMMALS",
+    "adjective": "Tribal",
+    "noun": "Vanguard",
+    "coreDrive": "loyalty",
+    "scores": {
+      "stealth": 60,
+      "velocity": 80,
+      "autonomy": 30,
+      "logic": 65,
+      "dominance": 70
+    },
+    "mindsetText": "The Collective Alliance: You operate on a cognitive frequency that constantly balances group coherence with internal sovereignty. You process social feedback as raw architectural telemetry, reading the structural dynamics of pack hierarchy and identifying leadership gaps before they destabilize the group. Your intelligence is deeply relational, viewing every challenge through the lens of community defense and shared resource preservation.",
+    "palladiumText": "The Loyal: Your emotional stability is contingent upon finding a validated role within a trusted network, finding comfort in shared risk and collective burden. You require clear interpersonal contracts and functional group dynamics to recharge your internal batteries. When your core circle experiences friction, your security baseline wavers, driving you to re-establish boundaries or consolidate social bonds.",
+    "styleText": "The Coordinated Campaign: You execute projects through structural alignment, distributing operational stress across a network rather than hoarding responsibility. You thrive when guiding collaborative vanguards, leveraging pack power to dismantle complex, heavy roadblocks. Your style relies heavily on clear delegation, systematic milestones, and constant informational updates.",
+    "shadowText": "The Conformist Trap: You risk subsuming your individual identity and personal desires into the consensus of the pack, stalling when consensus fails. When threatened, you may display a cold, pack-oriented rejection of outsiders to protect internal alignment. Antidotes include forcing independent decision-making under zero-consultation constraints and setting firm solo goals.",
+    "cognitiveCadence": "You parse data packets horizontally relative to group dependencies, assessing how information impacts the collective grid. Your focus scans general connections, prioritizing structural alignment over individual data silos.",
+    "relationalArchitecture": "You establish high-trust, interdependent operational bonds within a defined inner circle. Your boundaries are protective of the collective, requiring active shared responsibility and high transactional visibility.",
+    "existentialTrigger": "You undergo defensive operational reorganization when group alignment breaks down, forcing you to consolidate trust or re-establish team hierarchies to avoid vulnerability.",
+    "structuralPositioning": "You function best as a key bridge linking operational squads, aligning individual roles with the overarching organizational mission to maximize strategic leverage."
+  },
+  {
+    "id": "cat",
+    "name": "Cat",
+    "emoji": "🐈",
+    "category": "LAND MAMMALS",
+    "adjective": "Autonomous",
+    "noun": "Sovereign",
+    "coreDrive": "autonomy",
+    "scores": {
+      "stealth": 90,
+      "velocity": 75,
+      "autonomy": 95,
+      "logic": 80,
+      "dominance": 40
+    },
+    "mindsetText": "The Solitary Sovereign: You perceive the world as an arena for self-directed exploration, rejecting external rules and collective pressure. You map your environment based on personal comfort maps, maintaining a cool, observational distance from social drama. Your cognition is highly selective, focusing intensely on subjects that align with your immediate curiosity.",
+    "palladiumText": "The Sanctuary: Your self-worth is entirely self-generated, requiring zero outside validation to confirm your capability. You recharge in absolute quiet, demanding complete command over your physical and psychological environment. If others attempt to control your schedule, you retreat behind impenetrable walls of indifference.",
+    "styleText": "The Opportunistic Sprint: You work in short, highly concentrated bursts of creative action, avoiding long, dry administrative processes. You reject rigid operational pipelines, preferring to execute deliverables on your own unique timeline. Your strategy relies on stealthy movement, subtle observation, and bypassing traditional loops.",
+    "shadowText": "The Aloof Shield: You are perceived as cold, uncooperative, or emotionally distant, alienating potential allies under stress. You struggle to accept help, viewing collaboration as a potential threat to your freedom. Antidotes include scheduling brief, structured syncs and intentionally sharing minor project files early.",
+    "cognitiveCadence": "You scan informational fields for personal utility points, filtering out external data noise. Your mind operates on a selective focus loop, processing inputs sequentially based on immediate interest.",
+    "relationalArchitecture": "You maintain absolute transactional boundaries, choosing interaction only under mutual non-interference contracts. You protect your personal space, keeping low-dependency alignments with others.",
+    "existentialTrigger": "You execute sharp defensive detachment or environment shifts when external systems attempt to control your schedule, re-establishing your personal freedom.",
+    "structuralPositioning": "You perform best at the edges of a network layout, developing unique concepts without management interference to maximize creative output."
+  },
+  {
+    "id": "bear",
+    "name": "Bear",
+    "emoji": "🐻",
+    "category": "LAND MAMMALS",
+    "adjective": "Fortified",
+    "noun": "Warden",
+    "coreDrive": "protection",
+    "scores": {
+      "stealth": 40,
+      "velocity": 55,
+      "autonomy": 85,
+      "logic": 60,
+      "dominance": 85
+    },
+    "mindsetText": "The Fortified Sentinel: You process reality through the lens of resource security, boundary defense, and physical stability. You observe group movements slowly, tracking asset allocation and boundary lines with steady, unhurried attention. Your logical systems are pragmatic, built on concrete facts and long-term storage rather than abstract theory.",
+    "palladiumText": "The Heavy Shield: Your internal sanctuary is built on material security and self-reliance, requiring a heavy defensive buffer. You recharge in isolated, quiet, comfortable spaces where you have absolute physical control. You protect your vulnerabilities under a thick armor of stoicism, resisting emotional intrusion.",
+    "styleText": "The Heavy Endurance Drive: You operate with a slow, powerful rhythm, preferring to crush heavy tasks through sheer volume and patient consistency. You build systems designed to withstand external shocks and long winter cycles of market downturns. Your action style is systematic, relying on proven methods and spatial control.",
+    "shadowText": "The Defensive Fortress: You become rigid, stubborn, and unyielding when presented with sudden structural changes or collaborative pivots. Under pressure, you default to passive-aggressive resistance or hostile withdrawal. Antidotes include forcing minor daily workflow variations and inviting external reviews of your protective setups.",
+    "cognitiveCadence": "You organize information based on safety value and longevity, sorting inputs slowly. Your focus prioritizes concrete structures over speculative or high-frequency updates.",
+    "relationalArchitecture": "You establish strong, heavy, non-negotiable boundaries around a small set of dependents. You demand total loyalty and return it with unwavering, quiet support.",
+    "existentialTrigger": "You enter a highly defensive, territorial posture when resource reserves are threatened or boundary lines are crossed, shifting to protective lockdowns.",
+    "structuralPositioning": "You sit best at the base of an organizational hierarchy, holding critical infrastructures secure during times of external crisis."
+  },
+  {
+    "id": "fox",
+    "name": "Fox",
+    "emoji": "🦊",
+    "category": "LAND MAMMALS",
+    "adjective": "Cunning",
+    "noun": "Adapter",
+    "coreDrive": "cunning",
+    "scores": {
+      "stealth": 85,
+      "velocity": 80,
+      "autonomy": 75,
+      "logic": 85,
+      "dominance": 45
+    },
+    "mindsetText": "The Lateral Innovation: You read systems for hidden loopholes, structural weaknesses, and creative shortcut opportunities. You process social feedback as game mechanics, adapting your presentation dynamically to match current audience expectations. Your cognitive network is highly fluid, linking disparate concepts to build clever solutions.",
+    "palladiumText": "The Flexible: Your sanity is supported by mental agility and having multiple emergency exits in every project or relationship. You recharge in active, low-stakes environments where you can play with ideas without commitment. You dodge emotional vulnerability by shifting topics, using humor or charm to shield your core.",
+    "styleText": "The Agile Gambit: You deploy rapid, iterative tests and quick experiments to find path-of-least-resistance solutions. You navigate around massive bottlenecks rather than fighting them directly, keeping your operations lightweight. Your style is highly tactical, combining stealthy research with quick, adaptive action.",
+    "shadowText": "The Trickster Trap: You may be perceived as unreliable, superficial, or manipulative, changing paths too frequently to build deep trust. You struggle to commit to long-term, dry, monotonic tasks. Antidotes include setting non-negotiable weekly deadlines and documenting your action rules publicly.",
+    "cognitiveCadence": "You map data inputs across non-obvious maps, identifying shortcuts. Your mind processes info rapidly, skipping linear steps to construct clever bypass solutions.",
+    "relationalArchitecture": "You keep fluid, low-friction interpersonal boundaries, joining networks for mutual benefits. You avoid high-dependency commitments that restrict your pivots.",
+    "existentialTrigger": "You execute sudden strategic pivots when a workflow or agreement threatens to lock you into a single permanent path, avoiding long-term restriction.",
+    "structuralPositioning": "You sit best in a lateral advisor role, testing new approaches and finding loopholes without being tied to administration duties."
+  },
+  {
+    "id": "lion",
+    "name": "Lion",
+    "emoji": "🦁",
+    "category": "LAND MAMMALS",
+    "adjective": "Regal",
+    "noun": "Dominant",
+    "coreDrive": "dominance",
+    "scores": {
+      "stealth": 30,
+      "velocity": 70,
+      "autonomy": 80,
+      "logic": 65,
+      "dominance": 95
+    },
+    "mindsetText": "The Sovereign Command: You filter reality through maps of authority, influence, and territory control. You read social systems instantly to locate key decision-makers and establish your position at the peak of the pyramid. Your intelligence is highly strategic, focused on resource governance and large-scale vision.",
+    "palladiumText": "The Status: Your sense of security is tied to respect, visible command, and the loyalty of your chosen group. You recharge in comfortable, high-status environments where you hold absolute veto power. When your authority is questioned, your emotional baseline reacts with prideful defenses or territorial posturing.",
+    "styleText": "The Sovereign Campaign: You direct large initiatives through charismatic delegation, setting clear standards for your team. You execute in intense, high-energy command sprints, followed by periods of strategic rest and high-level oversight. Your style relies on visibility, bold decisions, and clear hierarchy.",
+    "shadowText": "The Tyrannical Shield: You can become overbearing, fragile under criticism, or prone to exhausting ego battles. You risk alienating valuable, independent thinkers who reject your hierarchy. Antidotes include practicing anonymous peer reviews and dedicating fixed hours to ground-level, supportive work.",
+    "cognitiveCadence": "You organize information based on authority lines and strategic impact. Your focus screens out minor details to track large-scale patterns and command opportunities.",
+    "relationalArchitecture": "You command networks with clear roles, offering heavy protection to subordinates. You expect respect and loyalty, keeping a structured distance from those you lead.",
+    "existentialTrigger": "You enter a state of intense, visible command or conflict when your leadership status or territory borders are actively questioned by outside systems.",
+    "structuralPositioning": "You must sit at the top of a decision hierarchy, holding absolute veto power and leading strategic campaigns to maximize leverage."
+  },
+  {
+    "id": "elephant",
+    "name": "Elephant",
+    "emoji": "🐘",
+    "category": "LAND MAMMALS",
+    "adjective": "Ancient",
+    "noun": "Archivist",
+    "coreDrive": "memory",
+    "scores": {
+      "stealth": 20,
+      "velocity": 40,
+      "autonomy": 70,
+      "logic": 90,
+      "dominance": 80
+    },
+    "mindsetText": "The Historical Registry: You analyze current events using long-term historical templates and ancestral precedents. You process data points with massive context, mapping cause-and-effect relationships over years rather than days. Your intelligence is deeply structured, acting as a living library of institutional memory.",
+    "palladiumText": "The Ancestral: Your stability is rooted in tradition, deep bonds, and the maintenance of structural legacies. You recharge in slow-paced, familiar settings surrounded by long-term archives. You hold silent, massive emotional weight for your circle, processing grief and stress slowly.",
+    "styleText": "The Monumental Progression: You move projects forward with slow, unstoppable momentum, relying on sheer resource weight and historic stability. You build massive foundations that protect the team from market fluctuations. Your style is patient, methodical, and highly cautious of short-term hype.",
+    "shadowText": "The Heavy Inertia: You can become trapped in outdated methods, resisting modern, rapid transformations due to historical caution. You carry grudges or past failures too long, slowing down action. Antidotes include setting up a rapid-innovation sandbox and forcing quick, low-stakes decisions.",
+    "cognitiveCadence": "You map incoming data against a massive registry of past precedents. Your focus scans long-duration cause-and-effect lines, rejecting rapid trends.",
+    "relationalArchitecture": "You build deep, lifelong relational structures with a selective cohort. Your boundaries are supportive and heavy, maintaining group history.",
+    "existentialTrigger": "You activate structural defense mechanisms when institutional values or long-term archives are threatened with deletion, stepping in to preserve them.",
+    "structuralPositioning": "You occupy the primary oversight role in a network layout, protecting policy standards and historical archives from short-term disruption."
+  },
+  {
+    "id": "deer",
+    "name": "Deer",
+    "emoji": "🦌",
+    "category": "LAND MAMMALS",
+    "adjective": "Vigilant",
+    "noun": "Grace",
+    "coreDrive": "vigilance",
+    "scores": {
+      "stealth": 75,
+      "velocity": 85,
+      "autonomy": 60,
+      "logic": 55,
+      "dominance": 30
+    },
+    "mindsetText": "The Atmospheric: You track subtle shifts in environment, tone, and micro-expressions with hyper-vigilant attention. You read social rooms instantly, looking for underlying friction or threats before they manifest openly. Your cognition is highly intuitive, prioritizing general harmony and escape directions.",
+    "palladiumText": "The Serene: Your internal peace requires gentle, beautiful, and low-stimulus environments to remain stable. You recharge in quiet, soft-lit sanctuaries away from loud conflicts or aggressive personalities. You absorb the anxiety of your surroundings, requiring regular emotional detoxification.",
+    "styleText": "The Graceful Navigation: You bypass obstacles and social conflicts through elegant maneuvering rather than direct force. You map actions with a quiet, polite rhythm, focusing on aesthetic quality and relational alignment. Your action is swift but low-impact, leaving zero collateral damage.",
+    "shadowText": "The Flight Trap: You run from necessary, direct confrontations, allowing small issues to grow into major crises. Under stress, you suffer from analysis paralysis driven by worst-case scenarios. Antidotes include practicing assertiveness training and writing down concrete confrontation rules.",
+    "cognitiveCadence": "You process inputs through a wide, multi-sensory scan. Your focus targets environmental threats and micro-expressions, seeking safety signs.",
+    "relationalArchitecture": "You maintain soft, highly sensitive relational boundaries. You connect through emotional harmony, stepping away to protect your nervous system from discord.",
+    "existentialTrigger": "You trigger immediate flight or general retreat when conflict levels exceed your tolerance limits, seeking to preserve internal balance.",
+    "structuralPositioning": "You function best in supportive, non-confrontational positions, smoothing out internal friction points and aligning team chemistry."
+  },
+  {
+    "id": "tiger",
+    "name": "Tiger",
+    "emoji": "🐅",
+    "category": "LAND MAMMALS",
+    "adjective": "Solitary",
+    "noun": "Sovereign",
+    "coreDrive": "autonomy",
+    "scores": {
+      "stealth": 85,
+      "velocity": 85,
+      "autonomy": 95,
+      "logic": 75,
+      "dominance": 90
+    },
+    "mindsetText": "The Concentrated Hunter: You target goals with absolute, singular focus, stripping away all peripheral distractions. You analyze situations independently, ignoring group opinions or collaborative consensus. Your mind maps the shortest, most efficient route to victory, processing inputs with quiet intensity.",
+    "palladiumText": "The Fortified Core: Your worth is entirely self-contained, completely shielded from outside criticism or peer validation. You recharge in absolute solitude, engaging in heavy physical or mental tasks without interruption. You view emotional reliance as a vulnerability, keeping your soft spots strictly guarded.",
+    "styleText": "The Precise Strike: You plan your moves in silence, executing with explosive power at the optimal moment. You work best with zero dependencies, avoiding complex team syncs or administrative overhead. Your style is highly focused, demanding high performance and direct results.",
+    "shadowText": "The Iron Isolation: You refuse to build supportive alliances, leaving yourself without backup during general failures. Your intense, direct energy can intimidate and silence creative team members. Antidotes include establishing a secure partnership pipeline and sharing raw progress logs weekly.",
+    "cognitiveCadence": "You focus on single, high-value directions, ignoring secondary details. Your mind processes information with focused speed, moving directly toward target capture.",
+    "relationalArchitecture": "You maintain heavy, clean boundary walls. You reject collaborative coordination, coordinating with other systems only at clear transactional interfaces.",
+    "existentialTrigger": "You execute immediate, defensive retreats or territorial attacks when team structures attempt to force you into shared decision-making loops.",
+    "structuralPositioning": "You operate best as a self-directed, high-impact specialist, taking down critical obstacles without requiring team coordination."
+  },
+  {
+    "id": "cheetah",
+    "name": "Cheetah",
+    "emoji": "🐆",
+    "category": "LAND MAMMALS",
+    "adjective": "Kinetic",
+    "noun": "Executor",
+    "coreDrive": "speed",
+    "scores": {
+      "stealth": 50,
+      "velocity": 100,
+      "autonomy": 85,
+      "logic": 60,
+      "dominance": 70
+    },
+    "mindsetText": "The High-Velocity: You search for the absolute fastest path to output, bypassing bureaucratic layers. You process variables rapidly, making split-second choices based on momentum and immediate feedback loops. Your mind is built for speed, discarding heavy analytical baggage to keep moving.",
+    "palladiumText": "The Momentum: Your security is driven by high action speed and visible forward progress. You recharge through rapid-fire tasks or complete, quiet physical shutdown. When projects stall or slow down, you experience intense restlessness and loss of focus.",
+    "styleText": "The Kinetic Burst: You execute projects in explosive sprints, delivering high-impact results in short timeframes. You bypass intermediate management layers, preferring direct lines to target delivery. Your style is focused on velocity, output, and immediate feedback.",
+    "shadowText": "The Burnout Target: You risk running out of fuel before hitting long-term goals, leaving tasks half-finished. You struggle with slow, administrative, or maintenance-heavy phases of product life cycles. Antidotes include pairing with a slow-burn manager and setting structured rest periods.",
+    "cognitiveCadence": "You process data packets at extreme velocities, focusing on immediate targets. Your focus discards historical context to maximize current momentum.",
+    "relationalArchitecture": "You establish short-term, high-speed transactional bonds to achieve specific goals. You avoid heavy relational systems that slow down your pivots.",
+    "existentialTrigger": "You trigger defensive redirects or complete shutdown when corporate processes slow down action speeds, avoiding gridlock.",
+    "structuralPositioning": "You sit best in a high-velocity action lane, taking projects across the finish line before momentum fades."
+  },
+  {
+    "id": "jaguar",
+    "name": "Jaguar",
+    "emoji": "🐆",
+    "category": "LAND MAMMALS",
+    "adjective": "Shadow",
+    "noun": "Prowler",
+    "coreDrive": "secrecy",
+    "scores": {
+      "stealth": 95,
+      "velocity": 85,
+      "autonomy": 90,
+      "logic": 70,
+      "dominance": 75
+    },
+    "mindsetText": "The Shadow: You monitor organizational dynamics from dark, unseen angles, reading underlying motivations. You process information by tracking hidden resource flows and informal power centers. Your intelligence is highly covert, preferring to understand a system fully before letting it know you are there.",
+    "palladiumText": "The Hidden Core: Your stability depends on absolute privacy and keeping your projects confidential. You recharge in dark, low-lit, personal sanctuaries where no one can watch your process. You guard your vulnerability by keeping even close contacts at a psychological distance.",
+    "styleText": "The Stealth action: You deploy quietly behind the scenes, resolving complex issues before they are noticed. You avoid public updates, presenting only polished, final outputs to protect your workflow. Your style is highly self-directed, combining high stealth with targeted action.",
+    "shadowText": "Perceived Coldness: High, you hoard information to keep leverage. Analysis Paralysis: Moderate, you wait to keep your layout hidden. Secretiveness: Absolute, you hide all files.",
+    "cognitiveCadence": "You map environmental parameters from unseen positions. Your mind tracks hidden resource points and informal power lines, filtering out surface updates.",
+    "relationalArchitecture": "You maintain absolute transactional walls. You share only selective, highly polished results with others, keeping your internal methods private.",
+    "existentialTrigger": "You execute immediate project pivots or retreat when external systems attempt to audit your raw workflow, preserving your covert position.",
+    "structuralPositioning": "You function best in a secure, backend position, designing critical code solutions away from public updates."
+  },
+  {
+    "id": "leopard",
+    "name": "Leopard",
+    "emoji": "🐆",
+    "category": "LAND MAMMALS",
+    "adjective": "Stealthy",
+    "noun": "Nomad",
+    "coreDrive": "autonomy",
+    "scores": {
+      "stealth": 90,
+      "velocity": 80,
+      "autonomy": 90,
+      "logic": 70,
+      "dominance": 75
+    },
+    "mindsetText": "The Elevated Adaptive: You track environmental parameters across multiple dimensions, always locating vertical escape routes. You read social settings without attaching to them, adapting your position to maintain your freedom. Your cognition is highly mobile, processing inputs through alternative spatial perspectives.",
+    "palladiumText": "The Nomadic: Your worth is linked to personal adaptability, schedule mobility, and fluid boundaries. You recharge by changing your location, working from new spaces, and traveling alone. You protect your heart by remaining unattached to static roles or long-term structures.",
+    "styleText": "The Vertical Strategy: You work across diverse projects, climbing above low-level friction to focus on high-impact zones. You execute independently, keeping a lightweight workflow that allows you to pivot instantly. Your style is quiet, tactical, and highly self-contained.",
+    "shadowText": "Perceived Coldness: You default to self-interest under threat. Analysis Paralysis: Low, you shift paths to bypass blocks. Secretiveness: Moderate, you keep your travel paths private.",
+    "cognitiveCadence": "You analyze environments for elevation points and vertical options. Your mind processes inputs dynamically, shifting focus to bypass bottlenecks.",
+    "relationalArchitecture": "You maintain low-dependency, highly mobile transactional ties. You protect your ability to change paths, avoiding high-commitment setups.",
+    "existentialTrigger": "You trigger immediate environment pivots or job transitions when a system threatens to lock you into a single location or role.",
+    "structuralPositioning": "You sit best in a mobile, cross-functional lane, moving between project squads to resolve blocks before migrating."
+  },
+  {
+    "id": "gorilla",
+    "name": "Gorilla",
+    "emoji": "🦍",
+    "category": "LAND MAMMALS",
+    "adjective": "Stoic",
+    "noun": "Protector",
+    "coreDrive": "protection",
+    "scores": {
+      "stealth": 30,
+      "velocity": 50,
+      "autonomy": 70,
+      "logic": 65,
+      "dominance": 85
+    },
+    "mindsetText": "The Protective Patriarch: You monitor group safety, resource stability, and structural coherence with quiet authority. You read social tension and hierarchy challenges immediately, stepping in to resolve disputes before they divide the team. Your mind is pragmatic, focused on security rules.",
+    "palladiumText": "The Guardian: Your stability is tied to the safety of your circle and the reliability of your boundaries. You recharge in structured, quiet, family domains where your leadership is respected. You carry heavy responsibility silently, refusing to show weakness to your dependents.",
+    "styleText": "The Heavy Guard: You manage operations through consistent workflow planning and steady, protective presence. You build strong boundaries around your team, shielding them from external corporate noise or client chaos. Your action relies on steady pressure and clear rules.",
+    "shadowText": "The Silent Wall: You use intimidation or cold silence to shut down valid criticisms or team experiments. You risk burning out under the weight of unshared emotional responsibility. Antidotes include creating a peer-level feedback loop and practicing visible vulnerability.",
+    "cognitiveCadence": "You track group parameters and resource levels systematically. Your mind filters out complex theory to focus on concrete security rules.",
+    "relationalArchitecture": "You build deep, protective boundaries around a small set of allies. You hold heavy responsibility silently, demanding respect and order.",
+    "existentialTrigger": "You activate explosive protective action or defensive lockdowns when external sources threaten the safety of your core group.",
+    "structuralPositioning": "You perform best as a protective team director, shielding your staff from corporate chaos to keep action steady."
+  },
+  {
+    "id": "chimpanzee",
+    "name": "Chimpanzee",
+    "emoji": "🐒",
+    "category": "LAND MAMMALS",
+    "adjective": "Agile",
+    "noun": "Innovator",
+    "coreDrive": "intellect",
+    "scores": {
+      "stealth": 55,
+      "velocity": 75,
+      "autonomy": 50,
+      "logic": 90,
+      "dominance": 60
+    },
+    "mindsetText": "The Technical Politics: You scan both general logic and political dynamics simultaneously, mapping social levers. You process group feedback as raw code, building coalitions to push technical ideas. Your cognition is highly experimental, testing tools and loops in group settings.",
+    "palladiumText": "The Synced: Your worth is driven by mental engagement, group status, and active intellectual debate. You recharge in collaborative workspaces with high communication loops and peer challenges. You process emotional stress through direct verbal debate or social venting.",
+    "styleText": "The Collaborative Blueprint: You solve complex puzzles by testing ideas in brainstorming sessions. You drive projects forward by winning social consensus and building clever team tools. Your style is fast, communicative, and highly interactive.",
+    "shadowText": "The Political Schemer: You get distracted by social politics, losing sight of the core project goals. You can become hyper-competitive, creating status games that divide the team. Antidotes include setting individual coding targets and tracking tasks on a visual dashboard.",
+    "cognitiveCadence": "You analyze technical parameters and political dynamics at the same time. Your focus maps social levers and general rules.",
+    "relationalArchitecture": "You navigate group structures with high communication. You build strategic alliances to push technical ideas while maintaining clear peer status.",
+    "existentialTrigger": "You trigger intense political maneuvering or workspace transitions when your intellectual inputs are sidelined by the hierarchy.",
+    "structuralPositioning": "You occupy a collaborative leadership slot, driving brainstorming loops and connecting technical teams with project stakeholders."
+  },
+  {
+    "id": "panda",
+    "name": "Panda",
+    "emoji": "🐼",
+    "category": "LAND MAMMALS",
+    "adjective": "Tranquil",
+    "noun": "Anchor",
+    "coreDrive": "calmness",
+    "scores": {
+      "stealth": 35,
+      "velocity": 30,
+      "autonomy": 80,
+      "logic": 50,
+      "dominance": 40
+    },
+    "mindsetText": "The Sensory: You filter out high-frequency noise and corporate stress, seeking peace. You process environmental inputs slowly, prioritizing comfort and immediate well-being over metrics. Your mind is focused on simplify, finding the path of least resistance.",
+    "palladiumText": "The Cozy Sanctuary: Your sanity requires slow pacing, quiet routines, and soft spaces. You recharge in comfortable, low-stimulus environments with minimal digital inputs. You protect yourself by ignoring chaotic demands, maintaining a slow, protective shell.",
+    "styleText": "The Slow-Paced Maintenance: You work at an unhurried, steady rhythm, keeping systems running smoothly without pressure. You avoid high-stakes battles, focusing on long-term comfort and sustainable work. Your action relies on simple, low-energy routines.",
+    "shadowText": "The Complacent Slip: You slide into active avoidance and procrastination, ignoring critical deadlines to preserve your comfort. You resist necessary changes and urgent adjustments. Antidotes include setting external, automated alarm triggers and partnering with high-velocity executors.",
+    "cognitiveCadence": "You process environmental inputs slowly, seeking comfort. Your focus screens out high-stakes targets to maintain a calm baseline.",
+    "relationalArchitecture": "You maintain quiet, low-demand boundaries. You connect through soft, shared comfort, rejecting aggressive relational plays that create stress.",
+    "existentialTrigger": "You retreat completely or shut down communications when forced into high-stakes, aggressive team battles or tight deadlines.",
+    "structuralPositioning": "You function best in a low-pressure, maintenance-heavy slot, keeping existing systems running without high stress levels."
+  },
+  {
+    "id": "sloth",
+    "name": "Sloth",
+    "emoji": "🦥",
+    "category": "LAND MAMMALS",
+    "adjective": "Mindful",
+    "noun": "Stoic",
+    "coreDrive": "calmness",
+    "scores": {
+      "stealth": 80,
+      "velocity": 10,
+      "autonomy": 90,
+      "logic": 65,
+      "dominance": 20
+    },
+    "mindsetText": "The Ultra-Slow rhythm: You process reality in long, deep cycles, ignoring modern urgency. You filter out high-frequency social noise and panic, maintaining a steady, low-energy baseline. Your mind is highly efficient, conserving energy for critical tasks.",
+    "palladiumText": "The Isolated: Your stability is built on absolute disengagement from societal rush. You recharge in dark, low-lit rooms with complete quiet and zero incoming requests. You protect your sanity by slowing down your response times, refusing to be rushed.",
+    "styleText": "The Minimalist Flow: You execute tasks with minimal movement, focusing on deep documentation or single processes. You avoid administrative overhead by simply not participating, keeping your footprint tiny. Your style is slow, methodical, and highly conservationist.",
+    "shadowText": "The Passive Wall: You use extreme delays as passive-aggressive defense, blocking team progress. You shut down under pressure, refusing to communicate or adapt. Antidotes include using interactive timers and committing to a small daily delivery checklist.",
+    "cognitiveCadence": "You filter information in long, quiet cycles. Your focus isolates single critical processes, ignoring high-speed system noise.",
+    "relationalArchitecture": "You maintain absolute, silent boundaries. You reject transactional demands, responding to others only under your own slow rhythm rules.",
+    "existentialTrigger": "You execute complete communication shutdowns or passive blocks when external systems try to force fast-paced decisions.",
+    "structuralPositioning": "You perform best in a quiet archive or research lane, editing documentation under zero-interrupt parameters."
+  },
+  {
+    "id": "horse",
+    "name": "Horse",
+    "emoji": "🐎",
+    "category": "LAND MAMMALS",
+    "adjective": "Boundless",
+    "noun": "Pioneer",
+    "coreDrive": "freedom",
+    "scores": {
+      "stealth": 30,
+      "velocity": 85,
+      "autonomy": 75,
+      "logic": 50,
+      "dominance": 50
+    },
+    "mindsetText": "The Open Horizon: You scan environments for boundaries, limits, and escape routes. You read social settings to find opportunities for movement and expansion, avoiding confinement. Your cognition is wide-ranging, processing inputs through broad, general lines.",
+    "palladiumText": "The Wild Spirit: Your self-worth is tied to schedule freedom, personal space, and the open air. You recharge in wide, outdoor, high-movement spaces away from desks. You dodge emotional pressure by running from commitments that feel too tight.",
+    "styleText": "The Long-Distance Drive: You push projects forward across wide distances, maintaining high momentum. You map actions with a sweeping, fluid rhythm, driving progress on broad fronts. Your style is fast, expansive, and highly focused on growth.",
+    "shadowText": "The Runaway direction: You abandon projects or relationships when they enter heavy, administrative, or high-commitment phases. You struggle with small, detailed, static tasks. Antidotes include using time-boxing techniques and pairing with a grounded project manager.",
+    "cognitiveCadence": "You process environmental parameters on broad, sweeping maps. Your focus tracks limits and paths, avoiding static details.",
+    "relationalArchitecture": "You require wide interpersonal margins. You connect through shared journeys, running from relationships that feel restricting.",
+    "existentialTrigger": "You trigger immediate strategic pivots or escape when project plans attempt to limit your scheduling options or location choices.",
+    "structuralPositioning": "You excel at leading new market expansions, driving growth across wide networks without administrative static."
+  },
+  {
+    "id": "bull",
+    "name": "Bull",
+    "emoji": "🐂",
+    "category": "LAND MAMMALS",
+    "adjective": "Grounded",
+    "noun": "Titan",
+    "coreDrive": "resilience",
+    "scores": {
+      "stealth": 20,
+      "velocity": 60,
+      "autonomy": 80,
+      "logic": 55,
+      "dominance": 85
+    },
+    "mindsetText": "The Unyielding Ground: You analyze situations through structural weight, resource utility, and raw endurance. You process social feedback as environmental weather, remaining indifferent to quick opinion shifts. Your mind is focused on physical realities, facts, and concrete progress.",
+    "palladiumText": "The Iron Pillar: Your stability is built on personal reliability, work ethic, and static boundaries. You recharge through physical work, heavy rest, and routine habits. You process emotional pressure by locking it down, building up massive silent strength.",
+    "styleText": "The Heavy Plow: You drive projects forward by pushing through obstacles with sheer power. You maintain a steady, relentless rhythm, outlasting competitors through consistency. Your style is direct, structured, and highly resistant to outside noise.",
+    "shadowText": "The Stubborn Collision: You refuse to adjust your path even when facts show your direction is wrong. Under pressure, you become destructive or completely unmoving. Antidotes include scheduling mandatory review points and practicing active flexibility training.",
+    "cognitiveCadence": "You map data inputs systematically through concrete facts. Your focus rejects abstract theory to build stable conclusions.",
+    "relationalArchitecture": "You build heavy, reliable relational bonds. You expect consistent interactions, defending your cohort with quiet, unyielding grit.",
+    "existentialTrigger": "You enter a state of stubborn resistance or confrontation when external pivots threaten the structured rules of your project.",
+    "structuralPositioning": "You occupy a foundational slot, maintaining core project pipelines stable under high stress conditions."
+  },
+  {
+    "id": "rhino",
+    "name": "Rhino",
+    "emoji": "🦏",
+    "category": "LAND MAMMALS",
+    "adjective": "Unstoppable",
+    "noun": "Force",
+    "coreDrive": "dominance",
+    "scores": {
+      "stealth": 25,
+      "velocity": 65,
+      "autonomy": 80,
+      "logic": 50,
+      "dominance": 90
+    },
+    "mindsetText": "The Linear Charge: You identify obstacles and charge them directly, mapping straightforward paths. You bypass complex social politics, using sheer force and conviction to push decisions. Your cognition is highly focused, stripping away details to maintain forward speed.",
+    "palladiumText": "The Thick Armor: Your security is built on strength, self-reliance, and personal dominance. You recharge in quiet, isolated, high-heat locations with zero external input. You protect your vulnerability behind a massive shield of aggressive confidence.",
+    "styleText": "The Direct Breakthrough: You execute plans with intense, focused power, crushing roadblocks. You maintain a simple, heavy rhythm, ignoring administrative steps to reach the target. Your style is direct, linear, and highly command-oriented.",
+    "shadowText": "The Blind Charge: You steamroll delicate team dynamics and ignore critical details in your rush to execute. You react to opposition with immediate, confrontational anger. Antidotes include forcing a slow-down step before major launches and hiring a detailed auditor.",
+    "cognitiveCadence": "You map objects directly, filtering out side data. Your focus moves on a single path, accelerating toward objective capture.",
+    "relationalArchitecture": "You maintain thick, command-based walls. You interact through clear demands, rejecting subtle diplomatic plays that slow down decisions.",
+    "existentialTrigger": "You trigger immediate, high-power breakthroughs or direct confrontations when project parameters try to block your path.",
+    "structuralPositioning": "You must sit in a direct action slot, driving through major difficulties to clear paths for supporting teams."
+  },
+  {
+    "id": "hippo",
+    "name": "Hippo",
+    "emoji": "🦛",
+    "category": "LAND MAMMALS",
+    "adjective": "Territorial",
+    "noun": "Goliath",
+    "coreDrive": "protection",
+    "scores": {
+      "stealth": 50,
+      "velocity": 50,
+      "autonomy": 80,
+      "logic": 55,
+      "dominance": 90
+    },
+    "mindsetText": "The Heavy Border: You monitor your territory with aggressive vigilance, checking resources constantly. You process group dynamics by tracking boundaries and identifying intrusions. Your mind is focused on resource control, security, and holding space.",
+    "palladiumText": "The Submerged: Your stability is tied to absolute territorial security and physical comfort. You recharge in quiet, warm, static water zones with minimal external sightlines. You hide your sensitivity under the water, reacting with sudden power if provoked.",
+    "styleText": "The Heavy Defense: You hold positions with massive patience, refusing to move for competitors. You execute work with a slow, heavy rhythm, using weight to manage the market. Your style is patient, static, and highly protective.",
+    "shadowText": "The Hidden Threat: You strike with sudden, intense aggression when your territory or habits are challenged. You refuse to share space or collaborate with outside systems. Antidotes include setting up shared boundary rules and practicing proactive communication.",
+    "cognitiveCadence": "You organize information based on territorial utility and safety. Your focus tracks resource centers, ignoring external strategic noise.",
+    "relationalArchitecture": "You build absolute, non-negotiable boundaries around your group. You demand total compliance within your zone, protecting borders with power.",
+    "existentialTrigger": "You activate explosive defensive power or territorial fights when external agents threaten your resource control.",
+    "structuralPositioning": "You sit best in a resource control slot, holding key systems secure against outside competition."
+  },
+  {
+    "id": "hyena",
+    "name": "Hyena",
+    "emoji": "🦧",
+    "category": "LAND MAMMALS",
+    "adjective": "Opportunistic",
+    "noun": "Scavenger",
+    "coreDrive": "cunning",
+    "scores": {
+      "stealth": 65,
+      "velocity": 75,
+      "autonomy": 40,
+      "logic": 70,
+      "dominance": 60
+    },
+    "mindsetText": "The Resource Extraction: You read systems for trash-to-treasure opportunities and group weaknesses. You process social settings through shared utility, building alliances to secure assets. Your mind is tactical, focusing on efficiency and shared victories.",
+    "palladiumText": "The Hive Synergy: Your sense of safety is tied to team inclusion and having backup options. You recharge in active, informal, high-humor social settings. You process emotional weight by turning it into humor, shielding your worry with a laugh.",
+    "styleText": "The Collective Harvest: You execute tasks by coordinating with allies to leverage general gaps. You maintain a fluid, rapid pace, adapting to resource availability in real time. Your style is collaborative, opportunistic, and highly flexible.",
+    "shadowText": "The Cynical Scavenger: You use dark humor or criticism to deflect deep personal problems, avoiding real growth. You struggle to build primary, long-term original projects. Antidotes include committing to a solo, long-term creative task and limiting sarcasm.",
+    "cognitiveCadence": "You analyze environments for resource gaps and group leverage points. Your focus shifts rapidly based on asset availability.",
+    "relationalArchitecture": "You keep loose, high-interaction social boundaries. You connect through team utility and shared laughter, avoiding isolated slots.",
+    "existentialTrigger": "You trigger immediate coalition changes or strategic migrations when a project's resource supply runs dry.",
+    "structuralPositioning": "You perform best in a active, networking slot, finding new avenues and coordinating team resources."
+  },
+  {
+    "id": "badger",
+    "name": "Badger",
+    "emoji": "🦡",
+    "category": "LAND MAMMALS",
+    "adjective": "Ferocious",
+    "noun": "Resister",
+    "coreDrive": "resilience",
+    "scores": {
+      "stealth": 60,
+      "velocity": 55,
+      "autonomy": 90,
+      "logic": 60,
+      "dominance": 80
+    },
+    "mindsetText": "The Defensive Grit: You track environment threats with stubborn vigilance, mapping limits. You reject social pressure, maintaining raw boundaries even under intense group criticism. Your mind is highly defensive, focusing on resilience and holding your line.",
+    "palladiumText": "The Deep Den: Your security is built on grit, self-reliance, and unyielding defense. You recharge in deep, secure, private underground locations. You protect your vulnerabilities behind a shield of immediate, sharp anger.",
+    "styleText": "The Relentless Dig: You execute projects by outlasting all opposition and grinding through problems. You maintain a tough, steady rhythm, refusing to compromise on your parameters. Your style is direct, defensive, and highly independent.",
+    "shadowText": "The Hostile Corner: You react to minor feedback with immediate, explosive hostility, burning valuable bridges. You lock yourself away in defensive isolation, rejecting helpful systems. Antidotes include practicing de-escalation techniques and using neutral intermediaries.",
+    "cognitiveCadence": "You analyze data inputs to locate threats and structural boundaries. Your focus isolates risk factors, rejecting soft suggestions.",
+    "relationalArchitecture": "You maintain heavy, rigid boundary lines. You reject transactional compromise, defending your workspace with immediate, sharp resistance.",
+    "existentialTrigger": "You activate intense, unyielding defensive actions when external systems attempt to force changes on your home processes.",
+    "structuralPositioning": "You occupy the critical fallback slot, holding project standards secure when team plans collapse under pressure."
+  },
+  {
+    "id": "owl",
+    "name": "Owl",
+    "emoji": "🦉",
+    "category": "BIRDS",
+    "adjective": "Analytical",
+    "noun": "Observer",
+    "coreDrive": "logic",
+    "scores": {
+      "stealth": 85,
+      "velocity": 50,
+      "autonomy": 90,
+      "logic": 95,
+      "dominance": 40
+    },
+    "mindsetText": "The Silent Watchtower: You scan your surroundings from a high, objective viewpoint, mapping logic lines. You process information by stripping away emotional noise to find structural truths. Your mind is highly analytical, tracking cause-and-effect relationships over long cycles.",
+    "palladiumText": "The Data Sanctuary: Your sanity is anchored in logical clarity, truth, and absolute isolation. You recharge in quiet, low-lit, library-like spaces with minimal incoming messages. You protect your heart by keeping relationships at a clear, intellectual distance.",
+    "styleText": "The Meticulous Blueprint: You plan your moves down to the smallest detail before taking action. You execute with silent precision, ensuring every variable is accounted for. Your style is quiet, logical, and highly self-contained.",
+    "shadowText": "The Analysis Spiral: You get trapped checking variables, delaying action indefinitely. Your intellectual distance can make you appear cold, unfeeling, or hyper-critical. Antidotes include using time-limited decision windows and committing to rapid prototypes.",
+    "cognitiveCadence": "You track data points systematically from high-level perspectives. Your focus scans structural lines, ignoring emotional or atmospheric noise.",
+    "relationalArchitecture": "You maintain clean, formal transactional boundaries. You connect through technical alignment, rejecting close emotional dependencies.",
+    "existentialTrigger": "You execute immediate system audits or complete detachment when code paths or team arguments collapse into logical chaos.",
+    "structuralPositioning": "You sit best in a high-level review lane, checking process logic and structural designs before launch."
+  },
+  {
+    "id": "eagle",
+    "name": "Eagle",
+    "emoji": "🦅",
+    "category": "BIRDS",
+    "adjective": "Sovereign",
+    "noun": "Ascendant",
+    "coreDrive": "dominance",
+    "scores": {
+      "stealth": 40,
+      "velocity": 80,
+      "autonomy": 90,
+      "logic": 70,
+      "dominance": 90
+    },
+    "mindsetText": "The High Horizon: You scan the landscape for targets from an elevated, sovereign viewpoint. You bypass low-level group details, focusing entirely on high-impact strategic points. Your cognition is vision-oriented, mapping patterns across vast ranges.",
+    "palladiumText": "The Elevated: Your security is tied to vision control, status, and absolute schedule independence. You recharge in high-view, open, private spaces with zero visual interruptions. You protect your vulnerability by flying above the reach of emotional chaos.",
+    "styleText": "The Strategic Descent: You drive goals with sudden, high-speed action from above. You work with a clean, high-impact style, delegating the details to keep your view clear. Your strategy relies on visibility, status, and decisive action.",
+    "shadowText": "The Arrogant Gap: You lose touch with ground-level realities, making strategic plans that fail in practice. You look down on team members who handle detail work, damaging morale. Antidotes include doing hands-on data audits and holding regular ground-level reviews.",
+    "cognitiveCadence": "You scan data fields for high-impact target points. Your focus screens out micro details to maintain a wide strategic perspective.",
+    "relationalArchitecture": "You maintain elevated, distant boundaries. You operate from strategic heights, coordinating with teams only through high-level goals.",
+    "existentialTrigger": "You trigger defensive redirects or location shifts when administrative structures try to pull you into ground-level detail work.",
+    "structuralPositioning": "You must occupy the primary visionary slot in a network, setting target directories without managing daily details."
+  },
+  {
+    "id": "crow",
+    "name": "Crow",
+    "emoji": "🐦",
+    "category": "BIRDS",
+    "adjective": "Cognitive",
+    "noun": "Schemer",
+    "coreDrive": "intellect",
+    "scores": {
+      "stealth": 70,
+      "velocity": 70,
+      "autonomy": 80,
+      "logic": 90,
+      "dominance": 50
+    },
+    "mindsetText": "The Toolmaker: You read environments for functional tools, patterns, and complex loopholes. You process social feedback as game mechanics, using collective resources to solve puzzles. Your cognition is highly lateral, connecting unexpected data points.",
+    "palladiumText": "The Puzzle Sanctuary: Your sanity is supported by mental complexity and solving difficult riddles. You recharge in highly organized digital workspaces, playing with code or logic. You hide your heart behind an active, curious brain.",
+    "styleText": "The Complex Design: You build multi-step, automated workflows to achieve your goals. You map actions by leveraging external networks and clever, custom tools. Your style is smart, tactical, and highly focused on efficiency.",
+    "shadowText": "The Machiavellian Grids: You risk overcomplicating simple projects, creating grids that confuse the team. You can appear calculating, using others to test your concepts. Antidotes include writing down simple, direct target rules and practicing raw honesty.",
+    "cognitiveCadence": "You map data maps across unexpected lines. Your focus identifies loop patterns and technical shortcuts within systems.",
+    "relationalArchitecture": "You maintain flexible, utility-based ties. You join networks to solve complex puzzles, keeping your core plans independent.",
+    "existentialTrigger": "You activate rapid bypass strategies or network shifts when forced to work within slow, outdated, or illogical systems.",
+    "structuralPositioning": "You sit best in a technical design lane, constructing automated tools and loops to handle resource distribution."
+  },
+  {
+    "id": "falcon",
+    "name": "Falcon",
+    "emoji": "🦅",
+    "category": "BIRDS",
+    "adjective": "Precision",
+    "noun": "Striker",
+    "coreDrive": "speed",
+    "scores": {
+      "stealth": 60,
+      "velocity": 100,
+      "autonomy": 80,
+      "logic": 80,
+      "dominance": 75
+    },
+    "mindsetText": "The Target: You scan variables to lock onto objectives with absolute focus. You bypass social chatter and administrative overhead, tracking only target progress. Your mind is built for velocity, executing decisions at high speed.",
+    "palladiumText": "The Target: Your security is driven by high action speed and extreme target accuracy. You recharge in clean, quiet, highly organized work zones. You protect your sanity by shutting out all non-essential feedback loops.",
+    "styleText": "The Dive Strike: You execute projects in high-speed, calculated loops. You work with zero administrative baggage, demanding direct paths to production. Your style is fast, precise, and highly focused.",
+    "shadowText": "The Impatient Spear: You get frustrated by slow processes, burning out team members who need slower rhythms. You react to delays with sharp, cold demands. Antidotes include establishing a buffer layer and practicing patience exercises.",
+    "cognitiveCadence": "You scan variables at high speed, locking onto single goals. Your focus strips away secondary updates to maintain dive path speed.",
+    "relationalArchitecture": "You keep thin, goal-based boundaries. You map only with agents who match your action tempo, avoiding slow loops.",
+    "existentialTrigger": "You trigger immediate action pivots or contract terminations when project targets are shifted or delayed by administration.",
+    "structuralPositioning": "You occupy the primary delivery slot, executing final milestones at high velocities once paths are cleared."
+  },
+  {
+    "id": "hawk",
+    "name": "Hawk",
+    "emoji": "🦅",
+    "category": "BIRDS",
+    "adjective": "Tactical",
+    "noun": "Watcher",
+    "coreDrive": "vigilance",
+    "scores": {
+      "stealth": 80,
+      "velocity": 85,
+      "autonomy": 75,
+      "logic": 85,
+      "dominance": 70
+    },
+    "mindsetText": "The Sentinel: You monitor boundaries and operational metrics with sharp attention. You read environment changes instantly, tracking threat signals before they impact the team. Your mind is tactical, focusing on threat prevention.",
+    "palladiumText": "The Warning: Your sanity is tied to situational preparedness and boundary control. You recharge in secure, quiet rooms where you can see all entry points. You protect your vulnerability by maintaining a constant defensive posture.",
+    "styleText": "The Calculated Watch: You wait for the optimal moment to make tactical pivots, minimizing risk. You execute work with clear checkpoints and safety rules. Your style is vigilant, defensive, and highly focused.",
+    "shadowText": "The Paranoid Guard: You micromanage parameters, limiting team freedom due to fear of errors. You struggle to delegate, creating administrative bottlenecks. Antidotes include using automated warning metrics and setting trust delegation limits.",
+    "cognitiveCadence": "You process inputs through systematic threat grids. Your focus maps structural changes and system warnings instantly.",
+    "relationalArchitecture": "You keep secure, high-vigilance boundaries. You check others' credentials slowly before allowing access to your work files.",
+    "existentialTrigger": "You activate intense defensive audits or safety lockouts the moment warning metrics show high error risks.",
+    "structuralPositioning": "You sit best in a tactical control room slot, monitoring system metrics and blocking security violations."
+  },
+  {
+    "id": "peacock",
+    "name": "Peacock",
+    "emoji": "🦚",
+    "category": "BIRDS",
+    "adjective": "Expressive",
+    "noun": "Beacon",
+    "coreDrive": "harmony",
+    "scores": {
+      "stealth": 15,
+      "velocity": 50,
+      "autonomy": 50,
+      "logic": 60,
+      "dominance": 80
+    },
+    "mindsetText": "The Aesthetic Influence: You map social settings through attention, design, and status signs. You process group dynamics by directing communication and presenting bold ideas. Your cognition is visual, linking aesthetic impact with group coordination.",
+    "palladiumText": "The Spotlight: Your security is tied to appreciation, design quality, and social status. You recharge in beautiful, highly curated showrooms. You protect your sensitivity by presenting a brilliant, polished image to the world.",
+    "styleText": "The Creative Show: You drive projects by creating beautiful presentations and engaging networks. You map work through visual communication, building excitement. Your style is open, creative, and highly expressive.",
+    "shadowText": "The Vanity Trap: You risk focusing on visual presentation over functional code, leaving projects empty. Under pressure, you struggle with harsh criticism of your work. Antidotes include separating style reviews from logic audits and taking anonymous feedback.",
+    "cognitiveCadence": "You scan social environments for status cues and visual feedback. Your mind links concept presentation with network engagement.",
+    "relationalArchitecture": "You maintain open, highly expressive boundaries. You connect through visual feedback and social validation, seeking central attention slots.",
+    "existentialTrigger": "You trigger immediate style changes or network pivots when your creative inputs are ignored by the group.",
+    "structuralPositioning": "You sit best at the front of a network, leading public presentations and driving client engagement."
+  },
+  {
+    "id": "flamingo",
+    "name": "Flamingo",
+    "emoji": "🦩",
+    "category": "BIRDS",
+    "adjective": "Harmonic",
+    "noun": "Aesthetician",
+    "coreDrive": "harmony",
+    "scores": {
+      "stealth": 25,
+      "velocity": 50,
+      "autonomy": 40,
+      "logic": 55,
+      "dominance": 45
+    },
+    "mindsetText": "The Balance Poise: You scan settings for social balance, design consistency, and peace. You process group feedback as relational metrics, adjusting your stance to prevent friction. Your mind is diplomatic, focused on harmony and beauty.",
+    "palladiumText": "The Soft Light: Your stability requires pleasant, quiet, art-curated environments. You recharge in cozy, soft-lit spaces with minimal incoming data noise. You absorb relational stress, requiring quiet space to reset your balance.",
+    "styleText": "The Poised Collaboration: You move projects forward with a gentle, balanced rhythm. You map actions to maintain team balance, ensuring all voices are heard. Your style is polite, cooperative, and highly design-oriented.",
+    "shadowText": "The Avoidant Peace: You ignore critical disputes to keep surface-level peace, allowing toxic issues to grow. You hesitate to voice strong, necessary disagreements. Antidotes include practicing structured debate sessions and using written voting loops.",
+    "cognitiveCadence": "You map environments based on balance and design poise. Your focus filters out abrasive signals to keep structural harmony.",
+    "relationalArchitecture": "You keep soft, highly responsive boundaries. You connect through mutual consensus, adapting your position to keep group cohesion.",
+    "existentialTrigger": "You trigger defensive pivots or retreat when workspace conflict levels threaten your internal balance or group harmony.",
+    "structuralPositioning": "You occupy the primary mediation slot in a squad, balancing team dynamics and maintaining aesthetic consistency."
+  },
+  {
+    "id": "penguin",
+    "name": "Penguin",
+    "emoji": "🐧",
+    "category": "BIRDS",
+    "adjective": "Resilient",
+    "noun": "Cooperator",
+    "coreDrive": "loyalty",
+    "scores": {
+      "stealth": 45,
+      "velocity": 60,
+      "autonomy": 20,
+      "logic": 70,
+      "dominance": 50
+    },
+    "mindsetText": "The Shared Risk: You map survival through shared responsibility and team coordination. You process social feedback as group health metrics, maintaining communication loops. Your mind is operational, focusing on consistency and duty.",
+    "palladiumText": "The Huddle: Your security is tied to team integration and contributing to the circle. You recharge in active, shared workspaces with high peer support. You process emotional weight by sharing tasks and supporting others.",
+    "styleText": "The Relentless Huddle: You push projects through difficult conditions by using team alignment. You maintain a steady, shared rhythm, ensuring no member is left behind. Your style is collaborative, resilient, and highly organized.",
+    "shadowText": "The Groupthink Loop: You lose your unique voice in the team, going along with bad choices to keep alignment. You struggle to execute independent tasks without group confirmation. Antidotes include assigning solo project tasks and setting independent goals.",
+    "cognitiveCadence": "You organize information through shared tasks and team metrics. Your focus scans group health signs, ignoring solo paths.",
+    "relationalArchitecture": "You maintain highly integrated, cooperative boundaries. You recharge in active, shared workspaces, coordinating actions to match team metrics.",
+    "existentialTrigger": "You undergo defensive reorganization or squad shifts when team huddles break down or communication loops fail.",
+    "structuralPositioning": "You sit best in a central team coordination slot, ensuring consistent task integration and supporting peer workflows."
+  },
+  {
+    "id": "swan",
+    "name": "Swan",
+    "emoji": "🦢",
+    "category": "BIRDS",
+    "adjective": "Elegant",
+    "noun": "Purist",
+    "coreDrive": "harmony",
+    "scores": {
+      "stealth": 40,
+      "velocity": 65,
+      "autonomy": 75,
+      "logic": 70,
+      "dominance": 75
+    },
+    "mindsetText": "The Aesthetic Standard: You map quality standards, aesthetic purity, and group loyalty. You process information by separating high-quality work from raw noise. Your mind is highly refined, focusing on design standards and elegant solutions.",
+    "palladiumText": "The Classic Sanctuary: Your security is built on aesthetic purity and loyal, quiet relationships. You recharge in clean, quiet, classical settings with minimal noise. You protect your soft heart behind a boundary of cool dignity.",
+    "styleText": "The Refined Masterpiece: You work at a steady, focused pace, polishing outputs to perfection. You map with a selective circle, maintaining high quality. Your style is quiet, elegant, and highly quality-oriented.",
+    "shadowText": "The Elitist Wall: You maintain high, unrealistic quality standards that delay action. You appear distant or superior to team members who work at faster speeds. Antidotes include using time-boxing and setting 'good enough' parameters.",
+    "cognitiveCadence": "You sort information through standards of aesthetic and structural purity. Your focus screens out raw data to locate polished designs.",
+    "relationalArchitecture": "You keep highly selective, dignified boundaries. You connect through quiet, high-integrity alliances, rejecting superficial loops.",
+    "existentialTrigger": "You activate defensive detachment or standard audits when work output or team behavior drops below your quality threshold.",
+    "structuralPositioning": "You perform best as a design auditor, protecting output standards and maintaining visual brand consistency."
+  },
+  {
+    "id": "parrot",
+    "name": "Parrot",
+    "emoji": "🦜",
+    "category": "BIRDS",
+    "adjective": "Mimetic",
+    "noun": "Communicator",
+    "coreDrive": "intellect",
+    "scores": {
+      "stealth": 20,
+      "velocity": 65,
+      "autonomy": 45,
+      "logic": 80,
+      "dominance": 50
+    },
+    "mindsetText": "The Mimetic Synthesis: You map social language, ideas, and behavioral patterns. You process group dynamics by sharing information across channels, translating concepts. Your cognition is highly associative, linking diverse social circles.",
+    "palladiumText": "The Sync Loop: Your sanity requires constant conversational feedback and idea exchange. You recharge in active, talk-heavy spaces with high peer engagement. You process stress by verbalizing your thoughts, discussing problems.",
+    "styleText": "The Broadcast Campaign: You drive projects by sharing ideas, communicating goals clearly. You map actions through storytelling and narrative alignment. Your style is communicative, interactive, and highly social.",
+    "shadowText": "The Echo Trap: You repeat others' schemas without deep analysis, losing original insights. You struggle with long-term, quiet, isolated action tasks. Antidotes include scheduling fixed solo research blocks and writing down original project rules.",
+    "cognitiveCadence": "You map environments by translating and repeating patterns. Your focus scans network speech, linking ideas across points.",
+    "relationalArchitecture": "You keep open, highly interactive boundaries. You recharge through active debate, sharing ideas and linking social circles.",
+    "existentialTrigger": "You trigger workspace changes or intense messaging campaigns when team feedback loops go cold.",
+    "structuralPositioning": "You occupy a key networking bridge slot, sharing ideas between technical groups and management layers."
+  },
+  {
+    "id": "snake",
+    "name": "Snake",
+    "emoji": "🐍",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Transformational",
+    "noun": "Seer",
+    "coreDrive": "transformation",
+    "scores": {
+      "stealth": 95,
+      "velocity": 70,
+      "autonomy": 90,
+      "logic": 80,
+      "dominance": 70
+    },
+    "mindsetText": "The Chemical Instinct: You read environmental vibes, scanning subtle tension and power shifts. You process information by cutting through surface presentations to locate real motivations. Your mind is deeply intuitive, mapping general cycles.",
+    "palladiumText": "The Silent Transformation: Your stability depends on absolute privacy and keeping your projects confidential. You recharge in private, warm, closed spaces with zero eyes. You protect your vulnerability by maintaining an impenetrable boundary wall.",
+    "styleText": "The Patient Strike: You wait in silence, planning your moves before executing with sudden precision. You work independently, keeping your process hidden until delivery. Your style is stealthy, tactical, and highly transformational.",
+    "shadowText": "The Cold Retreat: You cut off contacts completely under stress, refusing necessary collaborative syncs. Your intense privacy can create distrust among team members. Antidotes include setting up automated, basic status indicators and sharing updates.",
+    "cognitiveCadence": "You map parameters through intuitive patterns. Your mind cuts through surface presentation to read general transitions and leverage points.",
+    "relationalArchitecture": "You maintain absolute, silent boundaries. You protect your transformation processes, coordinating only at clean, minimal interfaces.",
+    "existentialTrigger": "You execute complete identity reinvention or cold detachment when a network baseline becomes toxic or stagnant.",
+    "structuralPositioning": "You function best in a secure, self-directed research slot, reorganizing systems and introducing new code paradigms."
+  },
+  {
+    "id": "crocodile",
+    "name": "Crocodile",
+    "emoji": "🐊",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Ambush",
+    "noun": "Sentinel",
+    "coreDrive": "patience",
+    "scores": {
+      "stealth": 95,
+      "velocity": 60,
+      "autonomy": 85,
+      "logic": 70,
+      "dominance": 85
+    },
+    "mindsetText": "The Waterline Watch: You monitor environmental movements silently from below, tracking assets. You process group dynamics without joining, watching leverage points. Your mind is pragmatic, focusing on patience and sudden action.",
+    "palladiumText": "The Static Sanctuary: Your security is built on patience, survival, and static boundaries. You recharge in warm, quiet, private settings with zero requests. You protect your vulnerability under the water, waiting for clarity.",
+    "styleText": "The Ambush Campaign: You execute projects through slow, quiet preparation followed by sudden strikes. You maintain a static, low-energy rhythm until the target aligns. Your style is patient, covert, and highly focused.",
+    "shadowText": "The Stoic Stagnation: You delay action too long, letting opportunities pass in the name of patience. You appear unfeeling or cold, ignoring relational needs. Antidotes include setting hard action timers and scheduling regular check-ins.",
+    "cognitiveCadence": "You process inputs through slow, steady observation grids. Your focus tracks target directions without shifting position.",
+    "relationalArchitecture": "You maintain heavy, quiet, low-interaction walls. You watch others silently, avoiding transactional dependencies.",
+    "existentialTrigger": "You activate sudden, high-power defensive strikes or location shifts when external agents disrupt your quiet space.",
+    "structuralPositioning": "You sit best in a strategic waiting lane, deploying high-impact moves only when environmental variables align perfectly."
+  },
+  {
+    "id": "chameleon",
+    "name": "Chameleon",
+    "emoji": "🦎",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Spectral",
+    "noun": "Adapter",
+    "coreDrive": "harmony",
+    "scores": {
+      "stealth": 100,
+      "velocity": 40,
+      "autonomy": 80,
+      "logic": 70,
+      "dominance": 30
+    },
+    "mindsetText": "The Social Camouflage: You gather 360-degree data, shifting color to match setting requirements. You process group feedback as code, adapting your stance to prevent friction. Your cognition is adaptive, prioritizing harmony and safety.",
+    "palladiumText": "The Invisible Sanctuary: Your sanity is built on flexibility, adaptability, and invisibility. You recharge in quiet, empty spaces with zero audience. You protect your core by matching the expectations of your surroundings.",
+    "styleText": "The Shadow Integration: You adopt the operational processes of your target systems, working from within. You execute independently, keeping a low profile to avoid friction. Your style is quiet, tactical, and highly adaptive.",
+    "shadowText": "The Lost Identity: You risk losing your authentic voice, agreeing with everyone to avoid disputes. You struggle to make firm, independent decisions under pressure. Antidotes include writing down your core principles and practicing firm stance-taking.",
+    "cognitiveCadence": "You process information across multiple maps, mapping social expectations. Your focus adapts rapidly to match environment codes.",
+    "relationalArchitecture": "You keep fluid, invisible relational boundaries. You blend into surrounding networks to maintain safety, avoiding direct exposure.",
+    "existentialTrigger": "You trigger immediate color shifts or escape pivots when forced into a spotlight position that threatens your camouflage.",
+    "structuralPositioning": "You operate best in an integration lane, adapting system configurations and connecting distinct team platforms quietly."
+  },
+  {
+    "id": "komodo",
+    "name": "Komodo Dragon",
+    "emoji": "🐲",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Raw",
+    "noun": "Tyrant",
+    "coreDrive": "dominance",
+    "scores": {
+      "stealth": 55,
+      "velocity": 60,
+      "autonomy": 85,
+      "logic": 60,
+      "dominance": 95
+    },
+    "mindsetText": "The Dominant Predator: You track targets through sensory inputs, ignoring social rules. You process group dynamics as leverage maps, establishing territory. Your mind is raw, focusing on power and concrete results.",
+    "palladiumText": "The Heat Core: Your security is built on strength, territory control, and personal authority. You recharge through isolated rest and quiet spaces. You protect your heart by establishing absolute dominance, keeping threats away.",
+    "styleText": "The Direct Force: You execute projects with heavy, direct action, crushing roadblocks. You work independently, demanding absolute veto power over decisions. Your style is direct, command-oriented, and highly focused.",
+    "shadowText": "The Aggressive Dominant: You steamroll group ideas, creating a hostile environment for team members. You react to criticism with immediate, territorial anger. Antidotes include practicing active listening rules and setting up anonymous review panels.",
+    "cognitiveCadence": "You map environments through basic utility and power points. Your focus moves directly toward resource acquisition, ignoring systems.",
+    "relationalArchitecture": "You maintain heavy, dominant walls. You map only through clear authority terms, expecting complete compliance.",
+    "existentialTrigger": "You trigger immediate, high-power territorial fights when outside sources challenge your control over resource domains.",
+    "structuralPositioning": "You must occupy the primary command slot during operational emergencies, restructuring systems through direct power."
+  },
+  {
+    "id": "turtle",
+    "name": "Turtle",
+    "emoji": "🐢",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Stoic",
+    "noun": "Voyager",
+    "coreDrive": "patience",
+    "scores": {
+      "stealth": 50,
+      "velocity": 20,
+      "autonomy": 90,
+      "logic": 75,
+      "dominance": 40
+    },
+    "mindsetText": "The Deep Ocean: You map long-term directions, ignoring immediate noise and rush. You process group dynamics by keeping demands away from your shell, maintaining slow progress. Your mind is patient, focusing on endurance.",
+    "palladiumText": "The Shell Sanctuary: Your sanity is built on consistency, slow pacing, and physical security. You recharge in secure, quiet, slow settings. You protect your heart by retracting behind your shell, ignoring external stress.",
+    "styleText": "The Steady Voyage: You progress slowly, maintaining focus across long distances. You execute tasks independently, avoiding chaotic team syncs. Your style is slow, methodical, and highly conservationist.",
+    "shadowText": "The Passive Shell: You withdraw completely from necessary collaborative tasks, blocking team speed. You ignore urgent requests to preserve your pacing. Antidotes include setting up external alarm triggers and scheduling daily mini-syncs.",
+    "cognitiveCadence": "You organize information on long-duration timelines. Your focus scans distant landmarks, ignoring high-frequency status changes.",
+    "relationalArchitecture": "You maintain thick, quiet boundaries. You interact through selective, stable interfaces, retreating behind your shell under pressure.",
+    "existentialTrigger": "You activate complete communication blockades or withdraw when external timelines try to force high action speeds.",
+    "structuralPositioning": "You sit best in a stable, long-duration research or maintenance lane, keeping pipelines running steadily over years."
+  },
+  {
+    "id": "spider",
+    "name": "Spider",
+    "emoji": "🕷️",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Network",
+    "noun": "Architect",
+    "coreDrive": "logic",
+    "scores": {
+      "stealth": 95,
+      "velocity": 50,
+      "autonomy": 90,
+      "logic": 95,
+      "dominance": 60
+    },
+    "mindsetText": "The Web: You read general networks and vibrations, mapping logic grids. You process group dynamics from the center, remaining quiet. Your mind is highly mathematical, focusing on architecture and automated systems.",
+    "palladiumText": "The Grid Sanctuary: Your sanity is supported by structural design and logic clarity. You recharge in organized, private rooms with your tools. You protect your heart by automating your processes, keeping a clear distance.",
+    "styleText": "The Automated Web: You build systems that capture and process resources automatically. You execute work from the center of your network, monitoring flows silently. Your style is quiet, automated, and highly logical.",
+    "shadowText": "The Manipulative Grid: You appear cold or calculating, treating team members as resources in your grid. You overcomplicate tasks to preserve system structure. Antidotes include doing direct, manual collaboration work and sharing simple code plans.",
+    "cognitiveCadence": "You analyze environments through general vibration and connection lines. Your focus scans automated patterns and backend logic.",
+    "relationalArchitecture": "You keep structured, low-interaction boundaries. You connect through automated interfaces, monitoring network activities from the center.",
+    "existentialTrigger": "You execute immediate system rewrites or layout pivots when team changes threaten your control over the communication grids.",
+    "structuralPositioning": "You perform best at the center of system logic design, writing code pipelines that automate task distribution."
+  },
+  {
+    "id": "scorpion",
+    "name": "Scorpion",
+    "emoji": "🦂",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Hidden",
+    "noun": "Sentinel",
+    "coreDrive": "secrecy",
+    "scores": {
+      "stealth": 90,
+      "velocity": 60,
+      "autonomy": 90,
+      "logic": 65,
+      "dominance": 80
+    },
+    "mindsetText": "The Silent Sentinel: You monitor dark parameters for threats with intense vigilance. You process group feedback as potential vulnerability directions, keeping your plans private. Your mind is highly defensive, focusing on protection.",
+    "palladiumText": "The Lockbox: Your stability depends on absolute secrecy and keeping your files locked. You recharge in silent, locked, private rooms. You protect your heart by maintaining a sharp, immediate defensive posture.",
+    "styleText": "The Targeted Strike: You execute projects with high precision, avoiding public visibility. You work independently, presenting only finished outputs to protect your space. Your style is quiet, defensive, and highly focused.",
+    "shadowText": "The Defensive Poison: You react to constructive feedback with sharp, defensive attacks. You isolate yourself completely under stress, damaging collaborations. Antidotes include practicing neutral review methods and using shared dashboard tools.",
+    "cognitiveCadence": "You scan environment files for safety violations and leakage zones. Your focus tracks threat directions, ignoring soft updates.",
+    "relationalArchitecture": "You keep thick, private boundaries. You map only through highly secure, verified channels, rejecting casual transactional checks.",
+    "existentialTrigger": "You trigger immediate defensive pivots or complete project lockdowns when external audits threaten to expose your files.",
+    "structuralPositioning": "You occupy the critical protection gate in a system layout, reviewing security clearances and blocking unauthorized updates."
+  },
+  {
+    "id": "bee",
+    "name": "Bee",
+    "emoji": "🐝",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Hive",
+    "noun": "Operator",
+    "coreDrive": "loyalty",
+    "scores": {
+      "stealth": 30,
+      "velocity": 70,
+      "autonomy": 15,
+      "logic": 85,
+      "dominance": 50
+    },
+    "mindsetText": "The Collective: You map shared systems, team roles, and productivity loops. You process social feedback as project metrics, aligning with hive goals. Your mind is highly systematic, focusing on coordination and efficiency.",
+    "palladiumText": "The Hive: Your sense of worth is tied to productivity, utility, and team alignment. You recharge in structured, busy workspace environments. You process stress by working harder, focusing on group output.",
+    "styleText": "The Loop Campaign: You execute tasks systematically, repeating proven processes. You map actions through clear documentation and team syncs. Your style is organized, collaborative, and highly systematic.",
+    "shadowText": "The Workaholic Trap: You risk burning out by tying your entire identity to work metrics. You struggle to execute tasks that don't fit into existing hive rules. Antidotes include setting hard logout limits and practicing non-work creative play.",
+    "cognitiveCadence": "You organize information through shared tasks and loop schedules. Your focus scans productivity bottlenecks to keep systems aligned.",
+    "relationalArchitecture": "You maintain highly cooperative boundaries. You recharge in busy, structured spaces, coordinating actions to match team metrics.",
+    "existentialTrigger": "You execute intense task-planning updates or shift lanes when project rules collapse into chaos.",
+    "structuralPositioning": "You function best in a system-monitoring slot, ensuring consistent task integration and checking action queues."
+  },
+  {
+    "id": "butterfly",
+    "name": "Butterfly",
+    "emoji": "🦋",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Metamorphic",
+    "noun": "Muse",
+    "coreDrive": "transformation",
+    "scores": {
+      "stealth": 45,
+      "velocity": 65,
+      "autonomy": 80,
+      "logic": 50,
+      "dominance": 35
+    },
+    "mindsetText": "The Creative Transition: You scan for transitions, aesthetic growth, and change. You process group dynamics by moving lightly between projects, avoiding heavy commitments. Your cognition is visual, linking change with inspiration.",
+    "palladiumText": "The Light Horizon: Your sanity requires growth, creative liberty, and pleasant settings. You recharge in bright, open, visually beautiful environments. You protect your heart by changing your interests, avoiding heavy emotional demands.",
+    "styleText": "The Cross-Pollination: You share ideas across different projects, inspiring new setups. You work independently, keeping your schedule flexible to capture inspiration. Your style is light, creative, and highly metamorphic.",
+    "shadowText": "The Flighty Designer: You abandon projects before they are finished, chasing the next new idea. You struggle with dry, repetitive maintenance work. Antidotes include setting completion rewards and partnering with a structured executor.",
+    "cognitiveCadence": "You map environments for visual shifts and design changes. Your focus links inspiration across different project layers.",
+    "relationalArchitecture": "You keep open, highly mobile boundaries. You connect through brief, inspiring exchanges, avoiding high-commitment roles.",
+    "existentialTrigger": "You trigger immediate project pivots or environment shifts when a workflow falls into dry, repetitive maintenance.",
+    "structuralPositioning": "You perform best in early ideation slots, cross-pollinating ideas and building initial prototypes before migrating."
+  },
+  {
+    "id": "mantis",
+    "name": "Praying Mantis",
+    "emoji": "🦗",
+    "category": "REPTILES & INSECTS",
+    "adjective": "Meditative",
+    "noun": "Striker",
+    "coreDrive": "patience",
+    "scores": {
+      "stealth": 95,
+      "velocity": 40,
+      "autonomy": 90,
+      "logic": 85,
+      "dominance": 75
+    },
+    "mindsetText": "The Calm Calculation: You scan variables with cold, geometric precision. You process group dynamics without joining, waiting for optimal leverage. Your mind is highly patient, focusing on efficiency and target locking.",
+    "palladiumText": "The Minimalist: Your security is built on focus, silence, and schedule independence. You recharge in minimalist, quiet rooms. You protect your vulnerability behind a wall of absolute silence.",
+    "styleText": "The Precise Ambush: You decide slowly, planning your moves before executing with sudden precision. You work independently, keeping your process hidden. Your style is quiet, patient, and highly focused.",
+    "shadowText": "The Rigid Observer: You delay action too long, waiting for a perfect timing that may never come. You appear unfeeling or cold to team members. Antidotes include setting target deadlines and practicing fast-prototype exercises.",
+    "cognitiveCadence": "You scan fields with quiet, geometric observation. Your focus maps leverage points slowly, waiting to execute precision strikes.",
+    "relationalArchitecture": "You maintain absolute, quiet walls. You map only at verified target gates, rejecting casual team chat.",
+    "existentialTrigger": "You execute immediate system lockdowns or shifts when project chat channels collapse into unorganized static.",
+    "structuralPositioning": "You sit best in a quiet, high-stakes development lane, deploying key system updates only under optimal parameters."
+  },
+  {
+    "id": "shark",
+    "name": "Shark",
+    "emoji": "🦈",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Primal",
+    "noun": "Accelerator",
+    "coreDrive": "drive",
+    "scores": {
+      "stealth": 50,
+      "velocity": 90,
+      "autonomy": 85,
+      "logic": 60,
+      "dominance": 95
+    },
+    "mindsetText": "The Forward Momentum: You scan for progress directions and target points, ignoring politics. You process group dynamics as momentum metrics, pushing decisions quickly. Your mind is highly focused, prioritizing action over documentation.",
+    "palladiumText": "The Action: Your security is driven by forward movement and visible output. You recharge through physical sports or cold, isolated settings. You protect your sanity by ignoring emotional feedback loops.",
+    "styleText": "The Direct Charge: You execute projects by charging through obstacles with speed. You maintain a direct, intense rhythm, demanding fast results. Your style is focused, linear, and command-oriented.",
+    "shadowText": "The Steamroller Trap: You run over team needs, creating friction and burnout. You react to project delays with aggressive impatience. Antidotes include setting up progress checks and listening to detailed advisors.",
+    "cognitiveCadence": "You process info through progress directions. Your focus moves on linear paths, accelerating toward target delivery.",
+    "relationalArchitecture": "You maintain thick, command-based walls. You connect through direct delivery requirements, rejecting administrative static.",
+    "existentialTrigger": "You activate high-speed breakthroughs or project departures when administrative processes slow down action momentum.",
+    "structuralPositioning": "You must sit in an action slot, driving teams through bottlenecks to restore momentum."
+  },
+  {
+    "id": "dolphin",
+    "name": "Dolphin",
+    "emoji": "🐬",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Harmonic",
+    "noun": "Thinker",
+    "coreDrive": "intellect",
+    "scores": {
+      "stealth": 35,
+      "velocity": 85,
+      "autonomy": 50,
+      "logic": 85,
+      "dominance": 70
+    },
+    "mindsetText": "The Social Intelligence: You map collaborative networks, team play, and communication. You process group dynamics through active coordination, translating ideas. Your cognition is highly associative, linking play with logic.",
+    "palladiumText": "The Shared Harmony: Your sanity requires team validation, communication, and shared joy. You recharge in active, social settings. You process stress by discussing problems with peers.",
+    "styleText": "The Playful Sync: You solve complex puzzles by coordinating group brainstorming. You drive projects forward by building consensus and using clever team tools. Your style is fast, communicative, and highly social.",
+    "shadowText": "The Gossip Loop: You get distracted by social dynamics, losing focus on core target tasks. You can use social influence to bypass rules. Antidotes include setting individual delivery targets and tracking progress on a board.",
+    "cognitiveCadence": "You analyze information through collaborative brainstorming loops. Your focus links technical ideas with social consensus.",
+    "relationalArchitecture": "You keep open, highly interactive boundaries. You recharge in collaborative slots, sharing ideas and maintaining group joy.",
+    "existentialTrigger": "You trigger immediate workspace shifts or group changes when team loops go silent or dry.",
+    "structuralPositioning": "You occupy a key slot connecting technical squads, leading brainstorm syncs and aligning team goals."
+  },
+  {
+    "id": "whale",
+    "name": "Whale",
+    "emoji": "🐋",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Deep",
+    "noun": "Voyager",
+    "coreDrive": "calmness",
+    "scores": {
+      "stealth": 30,
+      "velocity": 40,
+      "autonomy": 80,
+      "logic": 75,
+      "dominance": 80
+    },
+    "mindsetText": "The Deep Ocean: You process deep, low-frequency patterns and history. You filter out immediate noise, focusing on long-term general progress. Your mind is patient, focusing on endurance and broad vision.",
+    "palladiumText": "The Deep Sanctuary: Your security is built on emotional depth, trust, and long-term values. You recharge in quiet, deep, private water spaces. You process emotional pressure slowly, holding massive weight.",
+    "styleText": "The Massive Flow: You manage large projects with patient, steady progression. You map work across broad fronts, relying on deep reserves. Your style is patient, heavy, and highly cautious of quick fixes.",
+    "shadowText": "The Silent Weight: You swallow worries until you implode, hiding problems from your team. You process changes too slowly, delaying urgent projects. Antidotes include setting up immediate warning loops and using agile coaches.",
+    "cognitiveCadence": "You map information on big picture-level maps. Your focus filters out immediate updates to track long-term patterns.",
+    "relationalArchitecture": "You build deep, silent boundaries. You protect your selective cohorts with unwavering presence, processing emotional static slowly.",
+    "existentialTrigger": "You activate deep, slow restructuring plans when corporate values or long-term pipelines are compromised.",
+    "structuralPositioning": "You occupy the primary oversight role in a layout, protecting long-term standards and checking structural stability."
+  },
+  {
+    "id": "octopus",
+    "name": "Octopus",
+    "emoji": "🐙",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Fluid",
+    "noun": "Strategist",
+    "coreDrive": "logic",
+    "scores": {
+      "stealth": 90,
+      "velocity": 70,
+      "autonomy": 90,
+      "logic": 95,
+      "dominance": 60
+    },
+    "mindsetText": "The Multi-Threaded: You map variables through tactile exploration and logic grids. You process group dynamics from the shadows, remaining invisible. Your mind is highly analytical, focusing on custom, adaptive designs.",
+    "palladiumText": "The Vault Sanctuary: Your sanity is supported by technical design and logic challenge. You recharge in private, organized rooms. You protect your heart by keeping your processes hidden, releasing ink when observed.",
+    "styleText": "The Parallel Process: You design custom, multi-threaded solutions to bypass roadblocks. You execute independently, keeping your schedule hidden. Your style is quiet, automated, and highly logical.",
+    "shadowText": "The Ink Trap: You withdraw completely when questioned, leaving your team without answers. You overcomplicate designs to keep yourself indispensable. Antidotes include writing down simple documentation rules and doing direct syncs.",
+    "cognitiveCadence": "You scan multiple data fields at the same time. Your focus builds custom configuration maps to solve blocks.",
+    "relationalArchitecture": "You keep secure, independent boundaries. You share only selective transactional results, releasing ink and retreating under pressure.",
+    "existentialTrigger": "You execute immediate custom pivots or code rewrites when a system layout tries to lock you into rigid paths.",
+    "structuralPositioning": "You sit best in a self-directed development slot, designing complex automated bypasses for general roadblocks."
+  },
+  {
+    "id": "frog",
+    "name": "Frog",
+    "emoji": "🐸",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Liminal",
+    "noun": "Navigator",
+    "coreDrive": "transformation",
+    "scores": {
+      "stealth": 75,
+      "velocity": 65,
+      "autonomy": 70,
+      "logic": 60,
+      "dominance": 40
+    },
+    "mindsetText": "The Transition Boundary: You track changes between land and water settings, mapping shifts. You process group dynamics by adapting to changes in system pressure. Your mind is adaptive, focusing on transitions.",
+    "palladiumText": "The Liminal Sanctuary: Your sanity requires transitions, natural settings, and flexible schedules. You recharge in quiet, natural spaces away from desks. You protect your heart by staying flexible, avoiding rigid roles.",
+    "styleText": "The Adaptive Leap: You wait for variables to align before making sudden pivots. You execute projects by adapting your process to the current environment. Your style is flexible, liminal, and highly adaptive.",
+    "shadowText": "The Passive Leap: You wait too long for perfect environmental cues, stalling progress. You avoid taking firm stances, shifting between options. Antidotes include setting hard transition dates and documenting decisions.",
+    "cognitiveCadence": "You map environments by tracking transition points. Your focus scans shifts in system pressure, preparing for leaps.",
+    "relationalArchitecture": "You keep flexible, responsive boundaries. You connect through liminal roles, avoiding static setups that restrict mobility.",
+    "existentialTrigger": "You trigger immediate strategic leaps or environment changes when a project setting falls into dry, static routines.",
+    "structuralPositioning": "You occupy the transition lane in a layout, integrating old workflows with new platforms during migrations."
+  },
+  {
+    "id": "axolotl",
+    "name": "Axolotl",
+    "emoji": "🧬",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Regenerative",
+    "noun": "Mystic",
+    "coreDrive": "calmness",
+    "scores": {
+      "stealth": 65,
+      "velocity": 30,
+      "autonomy": 80,
+      "logic": 55,
+      "dominance": 30
+    },
+    "mindsetText": "The Regenerative Flow: You map slow currents, seeking quiet restoration and growth. You filter out high-stress group noise, focusing on well-being. Your mind is patient, focusing on recovery and simple steps.",
+    "palladiumText": "The Healing Sanctuary: Your security requires quiet, comfortable, warm settings. You recharge in private, soft-lit environments with minimal demands. You protect your heart behind a gentle, quiet presence.",
+    "styleText": "The Patient Recovery: You work with a patient, supportive style, keeping systems running without stress. You execute quiet, simple routines. Your style is slow, supportive, and highly regenerative.",
+    "shadowText": "The Dependent Slip: You slide into passivity under pressure, relying too much on others. You avoid necessary conflicts to preserve your quiet peace. Antidotes include setting small, independent goals and practicing clear saying-no.",
+    "cognitiveCadence": "You filter information through standards of recovery. Your focus prioritizes system health over high-stakes targets.",
+    "relationalArchitecture": "You maintain soft, quiet boundaries. You connect through supportive presence, rejecting aggressive relational plays.",
+    "existentialTrigger": "You trigger complete communication retreats or recovery phases when system stress levels exceed your limits.",
+    "structuralPositioning": "You perform best in a quiet, supportive slot, managing internal well-being programs and maintaining group balance."
+  },
+  {
+    "id": "fish",
+    "name": "Aquarium Fish",
+    "emoji": "🐟",
+    "category": "AQUATIC & AMPHIBIANS",
+    "adjective": "Detached",
+    "noun": "Observer",
+    "coreDrive": "calmness",
+    "scores": {
+      "stealth": 60,
+      "velocity": 30,
+      "autonomy": 85,
+      "logic": 65,
+      "dominance": 20
+    },
+    "mindsetText": "The Glass Watcher: You observe setting variables behind a protective glass wall, insulated. You process group dynamics from a distance, keeping demands away. Your mind is highly self-contained, focusing on clean routines.",
+    "palladiumText": "The Glass Sanctuary: Your security is built on absolute insulation and quiet, clean routines. You recharge in clean, quiet, glass-walled rooms with zero requests. You protect your vulnerability by refusing direct engagement.",
+    "styleText": "The Static Stream: You progress systematically in simple, quiet routines. You work independently, avoiding complex collaborations or corporate pressure. Your style is quiet, insulated, and highly self-contained.",
+    "shadowText": "The Insulated Wall: You refuse necessary direct action under pressure, blocking team progress. You ignore critical warnings to preserve your insulation. Antidotes include setting up direct collaboration syncs and forcing quick, manual choices.",
+    "cognitiveCadence": "You map data inputs behind a protective buffer. Your focus scans system configurations without direct participation.",
+    "relationalArchitecture": "You keep secure, insulated walls. You map only through formal status reports, rejecting direct collaborative checks.",
+    "existentialTrigger": "You execute immediate system lockdowns or shifts when external processes try to force direct collaborative syncs.",
+    "structuralPositioning": "You perform best in a quiet quality checking slot, reviewing final products from a secure, buffered position."
+  }
+];
+
+    let engineMode = 'single';
+    let activeSlot = 'A';
+    let selectedIds = [];
+    let selectedIdsA = [];
+    let selectedIdsB = [];
+
+    // UI elements mapping
+    const actionBtn = document.getElementById("action-btn");
+    const selectionBar = document.getElementById("selection-bar");
+    const selectionScreen = document.getElementById("selection-screen");
+    const loadingScreen = document.getElementById("loading-screen");
+    const resultsScreen = document.getElementById("results-screen");
+    const comparisonScreen = document.getElementById("comparison-screen");
+    const terminalLog = document.getElementById("terminal-log");
+
+    // Engine Mode switching
+    function setEngineMode(mode) {
+      engineMode = mode;
+      
+      const singleBtn = document.getElementById("mode-single-btn");
+      const compareBtn = document.getElementById("mode-compare-btn");
+      const slotsBar = document.getElementById("compare-slots-bar");
+      
+      if (mode === 'single') {
+        singleBtn.className = "flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-white text-black bg-white select-none uppercase";
+        compareBtn.className = "flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-neutral-800 text-neutral-600 bg-black select-none uppercase";
+        slotsBar.classList.add("hidden");
+      } else {
+        compareBtn.className = "flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-white text-black bg-white select-none uppercase";
+        singleBtn.className = "flex-1 sm:flex-initial font-retro text-[8px] sm:text-xs tracking-widest px-4 py-2 border-2 border-neutral-800 text-neutral-600 bg-black select-none uppercase";
+        slotsBar.classList.remove("hidden");
+      }
+      
+      updateUI();
+    }
+
+    // Set Active Slot (A or B) in Comparison Mode
+    function setActiveSlot(slot) {
+      activeSlot = slot;
+      
+      const slotABtn = document.getElementById("slot-a-btn");
+      const slotBBtn = document.getElementById("slot-b-btn");
+      
+      if (slot === 'A') {
+        slotABtn.className = "flex-1 text-left p-2 border-2 border-white bg-white text-black font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center";
+        slotBBtn.className = "flex-1 text-left p-2 border-2 border-neutral-800 bg-black text-neutral-400 font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center";
+      } else {
+        slotBBtn.className = "flex-1 text-left p-2 border-2 border-white bg-white text-black font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center";
+        slotABtn.className = "flex-1 text-left p-2 border-2 border-neutral-800 bg-black text-neutral-400 font-mono-text text-xs sm:text-sm font-bold flex justify-between items-center";
+      }
+      
+      updateUI();
+    }
+
+    // Clear specific slot
+    function clearSlot(slot) {
+      if (slot === 'A') {
+        selectedIdsA = [];
+      } else {
+        selectedIdsB = [];
+      }
+      updateUI();
+    }
+
+    // Reset Comparison Result Screen
+    function resetComparison() {
+      comparisonScreen.classList.add("hidden");
+      selectionScreen.classList.remove("hidden");
+    }
+
+    // Initialize Card Grids
+    function initGrids() {
+      const grids = {
+        "LAND MAMMALS": document.getElementById("grid-mammals"),
+        "BIRDS": document.getElementById("grid-birds"),
+        "REPTILES & INSECTS": document.getElementById("grid-reptiles"),
+        "AQUATIC & AMPHIBIANS": document.getElementById("grid-aquatic")
+      };
+
+      // Clear existing content
+      Object.values(grids).forEach(el => el.innerHTML = "");
+
+      // Populate cards
+      animalDatabase.forEach(animal => {
+        const card = document.createElement("div");
+        card.id = `card-${animal.id}`;
+        card.className = "border-4 border-neutral-800 p-2 flex flex-col items-center justify-center cursor-pointer bg-black select-none hover:border-white transition-all duration-150 relative";
+        card.setAttribute("onclick", `toggleSelection('${animal.id}')`);
+
+        card.innerHTML = `
+          <span class="text-3xl mb-1">${animal.emoji}</span>
+          <span class="text-[11px] sm:text-xs text-center font-bold tracking-wider uppercase truncate w-full">${animal.name}</span>
+          <span class="sel-tag absolute top-0.5 right-0.5 text-[9px] font-bold text-black hidden">[X]</span>
+        `;
+
+        const targetGrid = grids[animal.category];
+        if (targetGrid) {
+          targetGrid.appendChild(card);
+        }
+      });
+    }
+
+    // Toggle Selection state
+    function toggleSelection(id) {
+      if (engineMode === 'single') {
+        const index = selectedIds.indexOf(id);
+        if (index > -1) {
+          selectedIds.splice(index, 1);
+        } else {
+          if (selectedIds.length >= 4) {
+            flashActionButton();
+            return;
+          }
+          selectedIds.push(id);
+        }
+      } else {
+        // Comparison mode
+        const targetList = activeSlot === 'A' ? selectedIdsA : selectedIdsB;
+        const index = targetList.indexOf(id);
+        if (index > -1) {
+          targetList.splice(index, 1);
+        } else {
+          if (targetList.length >= 4) {
+            flashActionButton();
+            return;
+          }
+          targetList.push(id);
+        }
+      }
+      updateUI();
+    }
+
+    function flashActionButton() {
+      const activeBtn = document.getElementById("action-btn");
+      activeBtn.classList.add("text-red-500", "border-red-500");
+      setTimeout(() => {
+        activeBtn.classList.remove("text-red-500", "border-red-500");
+      }, 400);
+    }
+
+    // Update UI Elements
+    function updateUI() {
+      const currentList = engineMode === 'single' ? selectedIds : (activeSlot === 'A' ? selectedIdsA : selectedIdsB);
+      
+      // Update Card Visual States
+      animalDatabase.forEach(animal => {
+        const card = document.getElementById(`card-${animal.id}`);
+        if (!card) return;
+        const tag = card.querySelector(".sel-tag");
+        
+        if (currentList.includes(animal.id)) {
+          let borderClass = 'border-cyan-400';
+          if (engineMode === 'compare' && activeSlot === 'B') {
+            borderClass = 'border-pink-400';
+          }
+          card.className = `border-4 ${borderClass} p-2 flex flex-col items-center justify-center cursor-pointer select-none relative`;
+          if (tag) tag.classList.remove("hidden");
+        } else {
+          card.className = "border-4 border-neutral-800 p-2 flex flex-col items-center justify-center cursor-pointer bg-black select-none hover:border-white transition-all duration-150 relative";
+          if (tag) tag.classList.add("hidden");
+        }
+      });
+
+      // Update Slot Emojis indicators
+      const slotAEmojis = document.getElementById("slot-a-emojis");
+      const slotBEmojis = document.getElementById("slot-b-emojis");
+      
+      if (slotAEmojis) {
+        if (selectedIdsA.length === 0) {
+          slotAEmojis.innerHTML = `<span class="text-neutral-600 text-xs">[EMPTY]</span>`;
+        } else {
+          slotAEmojis.innerHTML = selectedIdsA.map(id => {
+            const a = animalDatabase.find(x => x.id === id);
+            return a ? a.emoji : '';
+          }).join(" ");
+        }
+      }
+      
+      if (slotBEmojis) {
+        if (selectedIdsB.length === 0) {
+          slotBEmojis.innerHTML = `<span class="text-neutral-600 text-xs">[EMPTY]</span>`;
+        } else {
+          slotBEmojis.innerHTML = selectedIdsB.map(id => {
+            const a = animalDatabase.find(x => x.id === id);
+            return a ? a.emoji : '';
+          }).join(" ");
+        }
+      }
+
+      // Update Bottom Selection Bar
+      if (engineMode === 'single') {
+        selectionBar.innerHTML = selectedIds.length === 0 
+          ? `<span class="text-neutral-600 text-xs sm:text-sm font-bold">[EMPTY]</span>`
+          : selectedIds.map(id => {
+              const animal = animalDatabase.find(a => a.id === id);
+              return `<div class="border-2 border-white px-2 py-0.5 bg-black text-xs font-bold flex items-center gap-1 select-none">
+                <span>${animal.emoji}</span>
+              </div>`;
+            }).join("");
+
+        if (selectedIds.length >= 2 && selectedIds.length <= 4) {
+          actionBtn.disabled = false;
+          actionBtn.innerHTML = `ANALYZE SPECTRUM [${selectedIds.length}/4]`;
+          actionBtn.className = "font-retro text-[9px] sm:text-xs tracking-widest px-6 py-3 border-4 border-white text-black bg-white hover:bg-black hover:text-white cursor-pointer select-none transition-all duration-150 w-full md:w-auto text-center uppercase";
+        } else {
+          actionBtn.disabled = true;
+          actionBtn.innerHTML = `LOCK [SELECT 2-4]`;
+          actionBtn.className = "font-retro text-[9px] sm:text-xs tracking-widest px-6 py-3 border-4 border-neutral-800 text-neutral-600 bg-black cursor-not-allowed select-none transition-all duration-150 w-full md:w-auto text-center uppercase";
+        }
+      } else {
+        selectionBar.innerHTML = `<div class="text-xs sm:text-sm font-bold text-neutral-400">SLOT A: ${selectedIdsA.length} | SLOT B: ${selectedIdsB.length}</div>`;
+        
+        if (selectedIdsA.length >= 1 && selectedIdsB.length >= 1) {
+          actionBtn.disabled = false;
+          actionBtn.innerHTML = `COMPARE SPECTRUMS`;
+          actionBtn.className = "font-retro text-[9px] sm:text-xs tracking-widest px-6 py-3 border-4 border-white text-black bg-white hover:bg-black hover:text-white cursor-pointer select-none transition-all duration-150 w-full md:w-auto text-center uppercase";
+        } else {
+          actionBtn.disabled = true;
+          actionBtn.innerHTML = `CHOOSE FOR A & B`;
+          actionBtn.className = "font-retro text-[9px] sm:text-xs tracking-widest px-6 py-3 border-4 border-neutral-800 text-neutral-600 bg-black cursor-not-allowed select-none transition-all duration-150 w-full md:w-auto text-center uppercase";
+        }
+      }
+    }
+
+    // Helper for terminal typing effect
+    function typeLog(text) {
+      return new Promise(resolve => {
+        const div = document.createElement("div");
+        div.className = "whitespace-pre-line";
+        terminalLog.appendChild(div);
+        
+        let i = 0;
+        function type() {
+          if (i < text.length) {
+            div.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 8);
+          } else {
+            resolve();
+          }
+        }
+        type();
+      });
+    }
+
+    // Trigger Synthesis Process
+    async function startSynthesis() {
+      selectionScreen.classList.add("hidden");
+      loadingScreen.classList.remove("hidden");
+      terminalLog.innerHTML = "";
+
+      const startTime = Date.now();
+
+      await typeLog(">> READING SELECTED INSTINCTS...");
+      await new Promise(r => setTimeout(r, 100));
+      
+      await typeLog(">> RETRIEVING PSYCHOLOGICAL BLUEPRINTS...");
+      await new Promise(r => setTimeout(r, 100));
+      
+      const namesString = engineMode === 'single'
+        ? selectedIds.map(id => animalDatabase.find(a => a.id === id).name.toUpperCase()).join(", ")
+        : "DUAL COMPARISON: SLOT A & SLOT B";
+      
+      await typeLog(`>> MAPPING BEHAVIORAL TRAITS FOR: [ ${namesString} ]...\n`);
+      await new Promise(r => setTimeout(r, 100));
+      
+      await typeLog(">> SYNTHESIZING BEHAVIORAL PROFILE...");
+      await new Promise(r => setTimeout(r, 100));
+      
+      await typeLog(">> CALIBRATING INSTINCT CONVERGENCE...");
+      
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 2000 - elapsedTime);
+      await new Promise(r => setTimeout(r, remainingTime));
+
+      loadingScreen.classList.add("hidden");
+      
+      if (engineMode === 'single') {
+        generateOfflineReading(selectedIds);
+        resultsScreen.classList.remove("hidden");
+      } else {
+        generateComparisonReading();
+      }
+    }
+
+    // Helper to lowercase the first letter of a string for smooth linguistic weaving
+    function toLowerFirst(str) {
+      if (!str) return "";
+      let cleaned = str.trim();
+      if (cleaned.endsWith(".")) {
+        cleaned = cleaned.slice(0, -1);
+      }
+      return cleaned.charAt(0).toLowerCase() + cleaned.slice(1);
+    }
+
+    // Helper functions for comparison stats
+    function calculateAverageStats(animals) {
+      let stealth = 0, velocity = 0, autonomy = 0, logic = 0, dominance = 0;
+      animals.forEach(a => {
+        stealth += a.scores.stealth;
+        velocity += a.scores.velocity;
+        autonomy += a.scores.autonomy;
+        logic += a.scores.logic;
+        dominance += a.scores.dominance;
+      });
+      const count = animals.length;
+      return {
+        stealth: Math.round(stealth / count),
+        velocity: Math.round(velocity / count),
+        autonomy: Math.round(autonomy / count),
+        logic: Math.round(logic / count),
+        dominance: Math.round(dominance / count)
+      };
+    }
+
+    function compileProfileTitle(animals) {
+      const a = animals[0];
+      const b = animals[1] || null;
+      const c = animals[2] || null;
+      const d = animals[3] || null;
+      const count = animals.length;
+      if (count === 1) {
+        return `THE ${a.adjective.toUpperCase()} ${a.noun.toUpperCase()}`;
+      } else if (count === 2) {
+        return `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()}`;
+      } else if (count === 3) {
+        return `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()} / THE ${c.adjective.toUpperCase()} ${a.noun.toUpperCase()}`;
+      } else {
+        return `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()} / THE ${c.adjective.toUpperCase()} ${d.noun.toUpperCase()}`;
+      }
+    }
+
+    function generateComparisonReading() {
+      const animalsA = selectedIdsA.map(id => animalDatabase.find(a => a.id === id)).filter(Boolean);
+      const animalsB = selectedIdsB.map(id => animalDatabase.find(a => a.id === id)).filter(Boolean);
+
+      if (!animalsA.length || !animalsB.length) return;
+
+      const statsA = calculateAverageStats(animalsA);
+      const statsB = calculateAverageStats(animalsB);
+
+      const titleA = compileProfileTitle(animalsA);
+      const titleB = compileProfileTitle(animalsB);
+
+      document.getElementById('comp-title-a').innerText = titleA;
+      document.getElementById('comp-title-b').innerText = titleB;
+
+      const namesA = animalsA.map(a => a.name).join(' + ');
+      const namesB = animalsB.map(a => a.name).join(' + ');
+      document.getElementById('comp-summary-a').innerText =
+        `Profile A synthesizes the energies of ${namesA}. Core drive: ${animalsA[0].adjective} strategy.`;
+      document.getElementById('comp-summary-b').innerText =
+        `Profile B synthesizes the energies of ${namesB}. Core drive: ${animalsB[0].adjective} strategy.`;
+
+      // ── Stats Comparison ──
+      const metricsGrid = document.getElementById('comp-metrics-grid');
+      metricsGrid.innerHTML = '';
+      const statKeys = [
+        { name: 'stealth',   displayName: 'STEALTH'   },
+        { name: 'velocity',  displayName: 'VELOCITY'  },
+        { name: 'autonomy',  displayName: 'AUTONOMY'  },
+        { name: 'logic',     displayName: 'LOGIC'     },
+        { name: 'dominance', displayName: 'DOMINANCE' }
+      ];
+      statKeys.forEach(key => {
+        const valA = statsA[key.name];
+        const valB = statsB[key.name];
+        const diff = Math.abs(valA - valB);
+        const winner = valA >= valB ? 'A' : 'B';
+        const diffLabel = diff <= 10 ? '≈ MATCHED' : diff <= 25 ? '▲ MILD GAP' : '⚡ LARGE GAP';
+        const block = document.createElement('div');
+        block.className = 'border-2 border-neutral-800 p-3 bg-[#07090e] space-y-2';
+        block.innerHTML = `
+          <div class="font-retro text-[8px] sm:text-[9px] text-white tracking-widest">${key.displayName}</div>
+          <div class="flex justify-between text-[10px] font-mono-text">
+            <span class="text-cyan-400">A: ${valA}%</span>
+            <span class="text-pink-400">B: ${valB}%</span>
+          </div>
+          <div class="relative h-3 bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <div class="absolute left-0 top-0 h-full bg-cyan-400 opacity-70" style="width:${valA}%"></div>
+            <div class="absolute left-0 top-0 h-full bg-pink-400 opacity-40" style="width:${valB}%"></div>
+          </div>
+          <div class="flex justify-between text-[8px] font-retro">
+            <span class="text-neutral-400">DIFF: ${diff}%</span>
+            <span class="${diff <= 10 ? 'text-green-400' : diff <= 25 ? 'text-yellow-400' : 'text-red-400'}">${diffLabel}</span>
+          </div>
+        `;
+        metricsGrid.appendChild(block);
+      });
+
+      // ── Helper: get a representative field value for a slot ──
+      function getBlendedField(animals, field) {
+        const vals = animals.map(a => a[field]).filter(Boolean);
+        return vals.length ? vals[0] : '';
+      }
+
+      // ── Helper: detect if two text values share themes ──
+      function detectOverlap(textA, textB) {
+        if (!textA || !textB) return false;
+        const wordsA = new Set(textA.toLowerCase().split(/\W+/).filter(w => w.length > 4));
+        const wordsB = new Set(textB.toLowerCase().split(/\W+/).filter(w => w.length > 4));
+        let shared = 0;
+        wordsA.forEach(w => { if (wordsB.has(w)) shared++; });
+        return shared >= 3;
+      }
+
+      const pillars = [
+        { id: 1, icon: '🧠', label: 'CORE MINDSET',           field: 'mindsetText'           },
+        { id: 2, icon: '🛡️', label: 'EMOTIONAL ARCHITECTURE', field: 'palladiumText'          },
+        { id: 3, icon: '💼', label: 'OPERATIONAL STYLE',      field: 'styleText'              },
+        { id: 4, icon: '🎭', label: 'THE SHADOW SIDE',        field: 'shadowText'             },
+        { id: 5, icon: '⚡', label: 'COGNITIVE CADENCE',      field: 'cognitiveCadence'       },
+        { id: 6, icon: '🤝', label: 'RELATIONAL ARCHITECTURE',field: 'relationalArchitecture' },
+        { id: 7, icon: '🔥', label: 'EXISTENTIAL TRIGGERS',   field: 'existentialTrigger'     },
+        { id: 8, icon: '🌐', label: 'NETWORK POSITIONING',    field: 'structuralPositioning'  }
+      ];
+
+      // ── Common Ground: pillars that converge ──
+      const commonGround = document.getElementById('comp-common-ground');
+      commonGround.innerHTML = '';
+      let commonCount = 0;
+      pillars.forEach(p => {
+        const tA = getBlendedField(animalsA, p.field);
+        const tB = getBlendedField(animalsB, p.field);
+        if (detectOverlap(tA, tB)) {
+          commonCount++;
+          const div = document.createElement('p');
+          div.innerHTML = `<strong>${p.icon} ${p.label}:</strong> Both profiles converge here. A tends toward: "${tA ? tA.slice(0, 100) + '...' : '—'}" — B mirrors this with a similar orientation.`;
+          commonGround.appendChild(div);
+        }
+      });
+      if (commonCount === 0) {
+        commonGround.innerHTML = '<p class="text-neutral-500">No strong common ground detected. These two profiles are highly differentiated across all pillars.</p>';
+      }
+
+      // ── Full 8-Pillar Differential Grid ──
+      const diffGrid = document.getElementById('comp-diff-grid');
+      diffGrid.innerHTML = '';
+      pillars.forEach(p => {
+        const tA = getBlendedField(animalsA, p.field);
+        const tB = getBlendedField(animalsB, p.field);
+        const hasOverlap = detectOverlap(tA, tB);
+        const overlapTag = hasOverlap
+          ? '<span class="text-green-400 font-retro text-[8px]">▲ CONVERGES</span>'
+          : '<span class="text-red-400 font-retro text-[8px]">▼ DIVERGES</span>';
+
+        const block = document.createElement('div');
+        block.className = 'border-2 border-neutral-800 p-3 bg-[#07090e] space-y-3';
+        block.innerHTML = `
+          <div class="flex items-center justify-between border-b border-neutral-800 pb-2">
+            <span class="font-retro text-[9px] sm:text-[10px] text-white tracking-widest">${p.icon} ${p.label}</span>
+            ${overlapTag}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="space-y-1">
+              <div class="font-retro text-[8px] text-cyan-400 tracking-widest mb-1">PROFILE A</div>
+              <p class="text-xs text-gray-300 leading-relaxed font-mono-text">${tA || '<span class="text-neutral-600">No data</span>'}</p>
+            </div>
+            <div class="space-y-1">
+              <div class="font-retro text-[8px] text-pink-400 tracking-widest mb-1">PROFILE B</div>
+              <p class="text-xs text-gray-300 leading-relaxed font-mono-text">${tB || '<span class="text-neutral-600">No data</span>'}</p>
+            </div>
+          </div>
+        `;
+        diffGrid.appendChild(block);
+      });
+
+      // ── How You Work Together (synergy assessment) ──
+      const compAssessmentText = document.getElementById('comp-assessment-text');
+      let assessments = [];
+
+      if (statsA.autonomy >= 70 && statsB.autonomy >= 70) {
+        assessments.push('<p><strong>MUTUAL INDEPENDENCE:</strong> Both sides strongly prefer self-reliance. You each need your own space to think and produce. Daily friction is low because you both respect boundaries and do not require constant coordination.</p>');
+      } else if ((statsA.autonomy >= 70 && statsB.autonomy <= 45) || (statsA.autonomy <= 45 && statsB.autonomy >= 70)) {
+        assessments.push('<p><strong>COMMUNICATION CLASH:</strong> One side needs frequent check-ins while the other needs silence to function. You must agree on communication schedules early to avoid frustration on both ends.</p>');
+      } else {
+        assessments.push('<p><strong>HEALTHY AUTONOMY BALANCE:</strong> Both sides can work independently or closely without generating friction. Neither side needs to dramatically adjust for the other.</p>');
+      }
+
+      if (statsA.dominance >= 75 && statsB.dominance >= 75) {
+        assessments.push('<p class="mt-2"><strong>LEADERSHIP FRICTION:</strong> Both profiles drive hard to make final calls and take charge. Unless you clearly divide ownership domains, expect power struggles and stalled decisions.</p>');
+      } else if (statsA.dominance < 40 && statsB.dominance < 40) {
+        assessments.push('<p class="mt-2"><strong>DECISION VACUUM:</strong> Neither side naturally steps up to lead. Projects may slow or stall while each waits for the other to enforce a decision. Assign a clear decision-maker per domain.</p>');
+      } else {
+        assessments.push('<p class="mt-2"><strong>NATURAL LEAD + SUPPORT PAIRING:</strong> One profile naturally drives decisions while the other executes and refines. This creates a clean, low-friction dynamic where momentum is maintained consistently.</p>');
+      }
+
+      const diffVelocity = Math.abs(statsA.velocity - statsB.velocity);
+      if (diffVelocity >= 40) {
+        assessments.push('<p class="mt-2"><strong>SPEED MISMATCH:</strong> These profiles operate at fundamentally different tempos. One moves in fast bursts and expects rapid responses; the other prefers careful, deliberate pacing. Align on deadlines and rhythm expectations from the start.</p>');
+      } else {
+        assessments.push('<p class="mt-2"><strong>MATCHED TEMPO:</strong> Both profiles execute at similar speeds. Project momentum will stay consistent and neither side will feel pulled or held back by the other\'s pace.</p>');
+      }
+
+      const diffLogic = Math.abs(statsA.logic - statsB.logic);
+      if (diffLogic >= 30) {
+        assessments.push('<p class="mt-2"><strong>ANALYSIS GAP:</strong> One side is strongly data-driven and systematic; the other relies more on intuition and feel. This can create friction in decision-making but is also a strength — you cover different blind spots.</p>');
+      } else {
+        assessments.push('<p class="mt-2"><strong>ALIGNED REASONING STYLE:</strong> Both profiles approach problems with similar levels of logic and intuition. You will naturally arrive at similar frameworks for solving challenges.</p>');
+      }
+
+      compAssessmentText.innerHTML = assessments.join('');
+
+      comparisonScreen.classList.remove('hidden');
+    }
+
+
+    // The Contextual Mutation Engine
+    function generateOfflineReading(ids) {
+      // 1. FORCE THE ABSOLUTE OVERRIDE FOR OWL + SNAKE + FISH
+      const sortedIds = [...ids].sort();
+      const isEasterEgg = sortedIds.length === 3 && 
+                           sortedIds[0] === 'fish' && 
+                           sortedIds[1] === 'owl' && 
+                           sortedIds[2] === 'snake';
+
+      if (isEasterEgg) {
+        // Set stats bars to predetermined averages
+        document.getElementById("stat-stealth").innerText = "80%";
+        document.getElementById("bar-stealth").style.width = "80%";
+        document.getElementById("stat-velocity").innerText = "50%";
+        document.getElementById("bar-velocity").style.width = "50%";
+        document.getElementById("stat-autonomy").innerText = "88%";
+        document.getElementById("bar-autonomy").style.width = "88%";
+        document.getElementById("stat-logic").innerText = "80%";
+        document.getElementById("bar-logic").style.width = "80%";
+        document.getElementById("stat-dominance").innerText = "43%";
+        document.getElementById("bar-dominance").style.width = "43%";
+
+        document.getElementById("result-persona-title").innerHTML = "THE AUTONOMOUS ANCHOR / THE QUIET STRATEGIST";
+        document.getElementById("result-summary").innerHTML = "A highly observant, emotionally self-contained, and deeply introspective strategist who acts as a self-sustaining closed ecosystem.";
+        
+        document.getElementById("friction-panel").classList.add("hidden");
+
+        // Renders word-for-word custom master profile
+        document.getElementById("dossier-blueprint").innerHTML = `
+          <p><strong>The Layered Observer:</strong> Uses high-level owl logic to analyze 'why' things happen, snake instinct to read unspoken room tension, and fish patience to watch scenarios play out safely from a distance.</p>
+          <p><strong>Low Social Battery, High Social IQ:</strong> Maximum operational capacity triggers between 2100 and 0100. Excels at heavy backend system planning and complex architecture mapping under zero-noise conditions.</p>
+          <p><strong>Detached Empathy:</strong> Requires a minimalist, highly curated, or low-light sanctuary. Recharges through silent data curation, absolute privacy with zero eyes on them, and complete isolation from superficial social clutter.</p>
+        `;
+        document.getElementById("dossier-execution").innerHTML = `
+          <p><strong>Emotional Autonomy:</strong> The ultimate long-game planner. Never speaks or acts too early; gathers raw ambient data endlessly and strikes with clinical precision only when success is mathematically guaranteed.</p>
+          <p><strong>The Shedding Mechanism:</strong> High tolerance for total solitude. Productivity skyrockets exponentially when working entirely alone for days without requiring external validation or check-ins.</p>
+          <p><strong>Sanctuary Seekers:</strong> Enters a near-meditative hyper-focus trance over a single complex problem, completely tuning out the physical world for hours at a time.</p>
+        `;
+        document.getElementById("dossier-boundaries").innerHTML = `
+          <p><strong>The Long-Game Strategist:</strong> Low social battery paired with an incredibly high social IQ. Capable of instantly reading a room but choosing strategic silence because shallow small talk is physically exhausting.</p>
+          <p><strong>High Tolerance for Solitude:</strong> Operates behind a glass-walled moat. Views human emotional drama from a safe psychological distance, entirely refusing to absorb or engage with external chaos.</p>
+          <p><strong>Micro-Focus Capabilities:</strong> Possesses a powerful psychological shedding mechanism. The moment a habit, network, or relationship becomes toxic, they execute a cold, clinical detachment to reinvent themselves completely.</p>
+        `;
+        document.getElementById("dossier-antidote").innerHTML = `
+          <p><strong>Perceived Coldness:</strong> Perceived as cold, mysterious, or unfeeling because they guard their privacy fiercely, leaving even close contacts knowing only 50% of their mind.</p>
+          <p><strong>Analysis Paralysis:</strong> Vulnerable to deep analysis paralysis, getting trapped in permanent "observation mode" and delaying execution because they are endlessly checking variables.</p>
+          <p><strong>Secretiveness:</strong> Actionable Antidotes:<br>
+          1. Set a strict 10-minute timer and force an immediate operational choice.<br>
+          2. Audit ground-level details manually for 1 hour to break out of macro-observation.<br>
+          3. Intentionally execute one autonomous real-world action without waiting to parse more data.</p>
+        `;
+        document.getElementById("dossier-cognitive-cadence").innerHTML = `
+          <p><strong>Integrated Network Processing:</strong> Processes data packets through deep, multi-layered isolation. Filters out high-frequency noise and focuses on systemic patterns and hidden logic links under zero-stress conditions.</p>
+        `;
+        document.getElementById("dossier-relational-architecture").innerHTML = `
+          <p><strong>Sovereignly Insulated:</strong> Maintains absolute, non-negotiable transactional boundaries. Connects only through formal status interfaces, keeping close contacts at a safe psychological distance.</p>
+        `;
+        document.getElementById("dossier-existential-trigger").innerHTML = `
+          <p><strong>Boundary Violation:</strong> Triggers immediate detachment or environment shifts when external systems try to control schedules or inspect raw operational pipelines.</p>
+        `;
+        document.getElementById("dossier-network-positioning").innerHTML = `
+          <p><strong>Backend System Architect:</strong> Operates best from a secure, hidden position, designing backend system structures and critical rules away from public updates.</p>
+        `;
+        return;
+      }
+
+      const selectedAnimals = ids.map(id => animalDatabase.find(a => a.id === id));
+      
+      // Calculate averaged score vectors
+      let totalStealth = 0, totalVelocity = 0, totalAutonomy = 0, totalLogic = 0, totalDominance = 0;
+      selectedAnimals.forEach(ani => {
+        totalStealth += ani.scores.stealth;
+        totalVelocity += ani.scores.velocity;
+        totalAutonomy += ani.scores.autonomy;
+        totalLogic += ani.scores.logic;
+        totalDominance += ani.scores.dominance;
+      });
+
+      const count = selectedAnimals.length;
+      const avgStealth = Math.round(totalStealth / count);
+      const avgVelocity = Math.round(totalVelocity / count);
+      const avgAutonomy = Math.round(totalAutonomy / count);
+      const avgLogic = Math.round(totalLogic / count);
+      const avgDominance = Math.round(totalDominance / count);
+
+      // Calculate deltas (max - min) to detect extreme opposites / Volatile Flux
+      const vectors = [
+        { name: "stealth", avg: avgStealth, elVal: "stat-stealth", elBar: "bar-stealth", displayName: "STEALTH" },
+        { name: "velocity", avg: avgVelocity, elVal: "stat-velocity", elBar: "bar-velocity", displayName: "VELOCITY" },
+        { name: "autonomy", avg: avgAutonomy, elVal: "stat-autonomy", elBar: "bar-autonomy", displayName: "AUTONOMY" },
+        { name: "logic", avg: avgLogic, elVal: "stat-logic", elBar: "bar-logic", displayName: "LOGIC" },
+        { name: "dominance", avg: avgDominance, elVal: "stat-dominance", elBar: "bar-dominance", displayName: "DOMINANCE" }
+      ];
+
+      let volatileParagraphs = [];
+
+      vectors.forEach(v => {
+        const scores = selectedAnimals.map(a => a.scores[v.name]);
+        const minVal = Math.min(...scores);
+        const maxVal = Math.max(...scores);
+        const delta = maxVal - minVal;
+
+        const valElement = document.getElementById(v.elVal);
+        const barElement = document.getElementById(v.elBar);
+
+        barElement.style.width = `${v.avg}%`;
+
+        if (delta > 50) {
+          valElement.innerText = `${v.avg}% [VOLATILE FLUX]`;
+          volatileParagraphs.push(`[VOLATILE FLUX / ${v.displayName} PARADOX]: Your personality doesn't settle at an average baseline. Instead, you have a toggle switch inside your mind, shifting completely from one extreme behavior to another depending on the pressure around you.`);
+        } else {
+          valElement.innerText = `${v.avg}%`;
+        }
+      });
+
+      const a = selectedAnimals[0];
+      const b = selectedAnimals[1];
+      const c = selectedAnimals[2] || null;
+      const d = selectedAnimals[3] || null;
+
+      // Define Title Synthesis
+      let generatedTitle = "";
+      if (count === 2) {
+        generatedTitle = `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()}`;
+      } else if (count === 3) {
+        generatedTitle = `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()} / THE ${c.adjective.toUpperCase()} ${a.noun.toUpperCase()}`;
+      } else {
+        generatedTitle = `THE ${a.adjective.toUpperCase()} ${b.noun.toUpperCase()} / THE ${c.adjective.toUpperCase()} ${d.noun.toUpperCase()}`;
+      }
+      document.getElementById("result-persona-title").innerHTML = generatedTitle;
+
+      // Paradox Synthesis Logic
+      const drives = selectedAnimals.map(ani => ani.coreDrive);
+      let frictionParagraph = "";
+      
+      const hasAutonomy = drives.includes("autonomy");
+      const hasLoyalty = drives.includes("loyalty");
+      const hasSpeed = drives.includes("speed");
+      const hasPatience = drives.includes("patience");
+      const hasDominance = drives.includes("dominance");
+      const hasHarmony = drives.includes("harmony");
+      const hasMemory = drives.includes("memory");
+      const hasTransformation = drives.includes("transformation");
+
+      if (hasAutonomy && hasLoyalty) {
+        frictionParagraph = "There exists a fundamental operational paradox: the clash between Radical Autonomy and Pack Loyalty. While your self-reliant isolates demand absolute personal boundaries and individual choice, your collective vectors pull toward group alignment and shared burdens. This creates a pattern of active team alignment followed by sudden, protective retreats to reclaim your core.";
+      } else if (hasSpeed && hasPatience) {
+        frictionParagraph = "Your architecture experiences an active friction between Kinetic Speed and Primeval Patience. Part of you operates on high-velocity urgency, demanding immediate results and rapid execution, while another part is deeply stoic, preferring to enter long-duration waiting states until variables align. This can manifest as internal friction—feeling that you are moving either too fast for your systems to process, or stalling in static preparation.";
+      } else if (hasDominance && hasHarmony) {
+        frictionParagraph = "You carry the structural tension between Regal Dominance and Harmonic Adaptability. The drive to assert absolute authority, control territory, and lead conflicts directly clashes with the equal urge to blend into the background, maintain team cohesion, and preserve aesthetic or social peace. This results in a leadership style that shifts between intense command and sudden, quiet compromises.";
+      } else if (hasMemory && hasTransformation) {
+        frictionParagraph = "A distinct friction point exists between the weight of Ancient Memory and the urge for Transformational Renewal. While your memory vectors bind you to historical experiences, past patterns, and long-term habits, your metamorphic instincts urge you to shed old skins, break ties cleanly, and begin anew. You are constantly negotiating how much of your personal history to carry forward and how much to completely incinerate in the name of growth.";
+      }
+
+      // Combine standard drive paradoxes and volatile flux paradoxes
+      let combinedParadoxText = "";
+      if (frictionParagraph) {
+        combinedParadoxText += `<p class="mb-3">${frictionParagraph}</p>`;
+      }
+      if (volatileParagraphs.length > 0) {
+        combinedParadoxText += volatileParagraphs.map(p => `<p class="mb-2 font-semibold text-yellow-400">${p}</p>`).join("");
+      }
+
+      if (combinedParadoxText) {
+        document.getElementById("friction-panel").classList.remove("hidden");
+        document.getElementById("friction-text").innerHTML = combinedParadoxText;
+      } else {
+        document.getElementById("friction-panel").classList.add("hidden");
+      }
+
+      // Summary sentence
+      const namesFormatted = selectedAnimals.map((ani, idx) => {
+        if (idx === selectedAnimals.length - 1) return `and the ${ani.name}`;
+        return `the ${ani.name}`;
+      }).join(selectedAnimals.length === 2 ? " " : ", ");
+
+      document.getElementById("result-summary").innerHTML = 
+        `Dossier analysis of ${namesFormatted} confirms a highly dynamic configuration. Your operational style is driven by a fusion of ${a.adjective} strategy and ${b.adjective} execution mechanics.`;
+
+      // 2. THE FLUID LINGUISTIC SEAMLESS BLENDER
+      function blendProse(field, sectionIndex) {
+        function formatSection(txt) {
+          if (!txt) return "";
+          return txt.replace(/([^:\n]+:)/g, "<strong>$1</strong>");
+        }
+
+        function toLowerFirstHTML(htmlStr) {
+          if (!htmlStr) return "";
+          const tagMatch = htmlStr.match(/^(\s*<[^>]+>\s*)(.*)/);
+          if (tagMatch) {
+            const tag = tagMatch[1];
+            const text = tagMatch[2];
+            return tag + text.charAt(0).toLowerCase() + text.slice(1);
+          }
+          return htmlStr.charAt(0).toLowerCase() + htmlStr.slice(1);
+        }
+
+        const connectorSets = {
+          1: ["Deep down, ", "simultaneously, ", "moving forward, this evolves into ", "ultimately balancing as "],
+          2: ["Fundamentally, ", "in tandem with this, ", "under pressure, your focus shifts to ", "this securely anchors into "],
+          3: ["In daily operations, ", "this runs alongside a need to ", "when variables change, you switch to ", "this rounds out a system where "],
+          4: ["On the shadow side, ", "together with this, ", "under stress, you default to ", "this resolves into a state of "],
+          5: ["Regarding mental cadence, ", "in parallel, ", "under heavy loading, this expands to ", "at the baseline, this aligns as "],
+          6: ["In relational settings, ", "correspondingly, ", "when friction rises, this is shaped by ", "ultimately, this settles around "],
+          7: ["When facing life shifts, ", "in tandem, ", "during transition states, you activate ", "this grounds your personal path in "],
+          8: ["In team environments, ", "alongside this, ", "under structural pressure, you align as ", "this positions your best slot as "]
+        };
+
+        const connectors = connectorSets[sectionIndex] || connectorSets[1];
+
+        let parts = [];
+        if (a && a[field]) {
+          parts.push(`${connectors[0]}${toLowerFirstHTML(formatSection(a[field]))}`);
+        }
+        if (b && b[field]) {
+          parts.push(`${connectors[1]}${toLowerFirstHTML(formatSection(b[field]))}`);
+        }
+        if (c && c[field]) {
+          parts.push(`${connectors[2]}${toLowerFirstHTML(formatSection(c[field]))}`);
+        }
+        if (d && d[field]) {
+          parts.push(`${connectors[3]}${toLowerFirstHTML(formatSection(d[field]))}`);
+        }
+        return parts.join(" ");
+      }
+
+      document.getElementById("dossier-blueprint").innerHTML = `<p>${blendProse("mindsetText", 1)}</p>`;
+      document.getElementById("dossier-execution").innerHTML = `<p>${blendProse("palladiumText", 2)}</p>`;
+      document.getElementById("dossier-boundaries").innerHTML = `<p>${blendProse("styleText", 3)}</p>`;
+      document.getElementById("dossier-antidote").innerHTML = `<p>${blendProse("shadowText", 4)}</p>`;
+      document.getElementById("dossier-cognitive-cadence").innerHTML = `<p>${blendProse("cognitiveCadence", 5)}</p>`;
+      document.getElementById("dossier-relational-architecture").innerHTML = `<p>${blendProse("relationalArchitecture", 6)}</p>`;
+      document.getElementById("dossier-existential-trigger").innerHTML = `<p>${blendProse("existentialTrigger", 7)}</p>`;
+      document.getElementById("dossier-network-positioning").innerHTML = `<p>${blendProse("structuralPositioning", 8)}</p>`;
+    }
+
+    // 100% Offline Plain-Text Report Exporter
+    function downloadDossierReport() {
+      const title = document.getElementById("result-persona-title").innerText;
+      const summary = document.getElementById("result-summary").innerText;
+      
+      const stealth = document.getElementById("stat-stealth").innerText;
+      const velocity = document.getElementById("stat-velocity").innerText;
+      const autonomy = document.getElementById("stat-autonomy").innerText;
+      const logic = document.getElementById("stat-logic").innerText;
+      const dominance = document.getElementById("stat-dominance").innerText;
+      
+      const blueprint = document.getElementById("dossier-blueprint").innerText;
+      const execution = document.getElementById("dossier-execution").innerText;
+      const boundaries = document.getElementById("dossier-boundaries").innerText;
+      const antidote = document.getElementById("dossier-antidote").innerText;
+      const cadence = document.getElementById("dossier-cognitive-cadence").innerText;
+      const relational = document.getElementById("dossier-relational-architecture").innerText;
+      const trigger = document.getElementById("dossier-existential-trigger").innerText;
+      const positioning = document.getElementById("dossier-network-positioning").innerText;
+      
+      const content = `============================================================
+ARCHETYPE DOSSIER: ${title}
+============================================================
+SUMMARY:
+${summary}
+
+CORE STATS:
+STEALTH: ${stealth}
+VELOCITY: ${velocity}
+AUTONOMY: ${autonomy}
+LOGIC: ${logic}
+DOMINANCE: ${dominance}
+
+============================================================
+🧠 1. The Core Mindset:
+${blueprint}
+
+============================================================
+🛡️ 2. Emotional Architecture:
+${execution}
+
+============================================================
+💼 3. Operational Style:
+${boundaries}
+
+============================================================
+🎭 4. The Shadow Side:
+${antidote}
+
+============================================================
+🧠 5. Cognitive Processing Cadence:
+${cadence}
+
+============================================================
+🎭 6. Relational & Interpersonal Architecture:
+${relational}
+
+============================================================
+⏳ 7. Existential Identity Triggers:
+${trigger}
+
+============================================================
+💼 8. Network Positioning Matrix:
+${positioning}
+============================================================`;
+      
+      const blob = new Blob([content], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Archetype_Dossier_${title.replace(/[\/\s]+/g, '_')}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Reset Engine
+    function resetEngine() {
+      selectedIds = [];
+      selectedIdsA = [];
+      selectedIdsB = [];
+      updateUI();
+      resultsScreen.classList.add("hidden");
+      comparisonScreen.classList.add("hidden");
+      selectionScreen.classList.remove("hidden");
+    }
+
+
+// Event Listeners
+    actionBtn.addEventListener("click", startSynthesis);
+    document.getElementById("reset-btn").addEventListener("click", resetEngine);
+
+    // Initial load
+    window.onload = () => {
+      initGrids();
+      updateUI();
+    };
+  </script>
+</body>
+</html>
