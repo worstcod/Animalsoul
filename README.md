@@ -1,4 +1,4 @@
-# 🧬 Inner_ANIMALSOUL_Dectector
+# 🧬 Archetype: Inner_ANIMALSOUL_Dectector
 
 > A fully offline, single-page personality analysis tool powered by a 48-animal psychological database.
 
