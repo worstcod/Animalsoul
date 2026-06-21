@@ -4,7 +4,7 @@
 
 ## What is this?
 
-**Archetype** is a web app that maps your personality through the lens of animal archetypes. Select 2–4 animals that resonate with you and the engine synthesizes a deeply personalized psychological profile across **8 analytical pillars**.
+**Archetype**- is a web app that maps your personality through the lens of animal archetypes. Select 2–4 animals that resonate with you and the engine synthesizes a deeply personalized psychological profile across **8 analytical pillars**.
 
 No accounts. No backend. No data sent anywhere. 100% offline.
 
